@@ -7,8 +7,11 @@ class Tournament < ActiveRecord::Base
 
 
   def start_tournament
-    assess_rounds
-    initial_matches
+    if self.current_round == nil
+      assess_rounds
+      initial_matches
+      self.update(:current_round => 1)
+    end
   end
 
   def assess_rounds
@@ -41,7 +44,7 @@ class Tournament < ActiveRecord::Base
     players_shuffled = self.player_tournaments.to_a.shuffle
     while players_shuffled.size > 0
       if players_shuffled.size == 1
-        players_shuffled.pop.had_bye = true
+        players_shuffled[0].had_bye = true
       end
       self.matches.create(:player_1 => players_shuffled.pop, :player_2 => players_shuffled.pop, :round => 1)
     end

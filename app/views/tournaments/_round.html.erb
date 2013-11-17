@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <tr>
+      <th>Player 1</th>
+      <th>Record</th>
+      <th>Player 2</th>
+      <th>Record</th>
+    </tr>
+  </thead>
+<% @tournament.matches.select{ |m| m.round == @tournament.current_round }.each do |match| %>
+  <tr>
+    <td><%= match.player_1.player.name %></td>
+    <td><%= match.player_1.record %></td>
+    <% if match.player_2 != nil %>
+      <td><%= match.player_2.player.name %></td>
+      <td><%= match.player_2.record %></td>
+    <% else %>
+      <td>BYE</td>
+    <% end %>
+  </tr>
+<% end %>
+
+</table>

@@ -5,10 +5,21 @@
   <%= @tournament.name %>
 </p>
 
-<p>
-  <strong>Matches:</strong>
-  <%= @tournament.matches %>
-</p>
+<ol>
+  <% @tournament.players.to_a.each do |p| %>
+    <li>
+      <%= p.name %>
+    </li>
+  <% end %>
+</ol>
+
+<%= button_to 'Generate First Round', action: "generate_start" %>
+
+<% if @tournament.current_round != "nil" %>
+  <%= render 'round' %>
+<% end %>
+
+  
 
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to 'Back', tournaments_path %>

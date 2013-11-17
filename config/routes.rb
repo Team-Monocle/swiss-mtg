@@ -1,11 +1,14 @@
 SwissMtg::Application.routes.draw do
+
+  post '/tournaments/:id/generate_start', :to => 'tournaments#generate_start'
+
   resources :players
 
   resources :users
 
   resources :tournaments
 
-  root 'tournament#show'
+  root 'tournaments#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
