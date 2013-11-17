@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20131117162910) do
     t.integer  "player_id"
     t.integer  "tournament_id"
     t.integer  "match_points"
+    t.boolean  "had_bye"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 20131117162910) do
 
   create_table "tournaments", force: true do |t|
     t.string   "name"
+    t.integer  "number_of_rounds"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

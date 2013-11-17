@@ -36,6 +36,10 @@ end
 
 gem 'bcrypt-ruby', '~> 3.1.2'
 
+gem 'faker'
+
+gem 'pry'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

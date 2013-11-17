@@ -7,3 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 tournament1= Tournament.create(name: "test")
+
+30.times do
+  tournament1.players.build(:name => Faker::Name.name)
+end
+
+tournament1.save

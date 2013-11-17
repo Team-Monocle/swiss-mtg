@@ -4,7 +4,7 @@ class CreatePlayerTournaments < ActiveRecord::Migration
       t.integer :player_id
       t.integer :tournament_id
       t.integer :match_points
-
+      t.boolean :had_bye
       t.timestamps
     end
   end

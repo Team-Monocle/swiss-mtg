@@ -1,4 +1,4 @@
 class UserTournament < ActiveRecord::Base
-  belongs_to :users
-  belongs_to :tournaments
+  belongs_to :user
+  belongs_to :tournament
 end
