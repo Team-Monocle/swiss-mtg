@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_start]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round]
 
   # GET /tournaments
   # GET /tournaments.json
@@ -61,9 +61,10 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def generate_start
-    @tournament.start_tournament
-    redirect_to @tournament, notice: 'Round 1 Matches Generated'
+  def generate_round
+    @tournament.generate
+
+    redirect_to @tournament, notice: "Round #{@tournament.current_round} Matches Generated"
   end
 
   private

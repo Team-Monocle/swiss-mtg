@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20131117162910) do
   create_table "player_tournaments", force: true do |t|
     t.integer  "player_id"
     t.integer  "tournament_id"
-    t.integer  "match_points"
     t.boolean  "had_bye"
     t.datetime "created_at"
     t.datetime "updated_at"

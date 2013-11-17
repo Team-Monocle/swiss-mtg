@@ -6,12 +6,12 @@ class Tournament < ActiveRecord::Base
   has_many :users, through: :user_tournaments
 
 
-  def start_tournament
-    if self.current_round == nil
-      assess_rounds
-      initial_matches
-      self.update(:current_round => 1)
-    end
+  def generate
+    assess_rounds
+    self.current_round ||= 0
+    self.current_round += 1
+    round_matches
+    self.save
   end
 
   def assess_rounds
@@ -40,17 +40,20 @@ class Tournament < ActiveRecord::Base
     number_of_rounds
   end
 
-  def initial_matches
-    players_shuffled = self.player_tournaments.to_a.shuffle
-    while players_shuffled.size > 0
-      if players_shuffled.size == 1
-        players_shuffled[0].had_bye = true
+  def round_matches
+    player_list = self.player_tournaments.to_a.shuffle if self.current_round == 1
+    player_list ||= self.order_players
+    while player_list.size > 0
+      if player_list.size == 1
+        player_list[0].had_bye = true
       end
-      self.matches.create(:player_1 => players_shuffled.pop, :player_2 => players_shuffled.pop, :round => 1)
+      self.matches.create(:player_1 => player_list.shift, :player_2 => player_list.shift, :round => self.current_round)
     end
   end
 
-
+  def order_players
+    self.player_tournaments.sort_by{|p| -p.match_points }
+  end
 
 
 

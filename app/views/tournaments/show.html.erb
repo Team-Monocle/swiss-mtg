@@ -6,14 +6,14 @@
 </p>
 
 <ol>
-  <% @tournament.players.to_a.each do |p| %>
+  <% @tournament.order_players.each do |p| %>
     <li>
-      <%= p.name %>
+      <%= p.player.name %> | <%= p.match_points %> points
     </li>
   <% end %>
 </ol>
 
-<%= button_to 'Generate First Round', action: "generate_start" %>
+<%= button_to 'Generate Round', action: "generate_round" %>
 
 <% if @tournament.current_round != "nil" %>
   <%= render 'round' %>

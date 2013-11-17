@@ -1,6 +1,6 @@
 SwissMtg::Application.routes.draw do
 
-  post '/tournaments/:id/generate_start', :to => 'tournaments#generate_start'
+  post '/tournaments/:id/generate_round', :to => 'tournaments#generate_round'
 
   resources :players
 
