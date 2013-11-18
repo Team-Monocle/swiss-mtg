@@ -24,10 +24,12 @@
   <% end %>
 </ol>
 
-<% if @tournament.players.size >= 8 %>
-<%= button_to 'Generate Round', action: "generate_round" %>
+<% if @tournament.players.size < 8 %>
+  The tournament must have at least 8 players.
+<% elsif !@tournament.round_complete %>
+  The next round can be generated once all matches are resolved
 <% else %>
-The tournament must have at least 8 players.
+  <%= button_to 'Generate Next Round', action: "generate_round" %>
 <% end %>
 
 

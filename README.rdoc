@@ -6,3 +6,4 @@ Wishlist!
 4. Allow Players To Update Round Results (From Their Phones?)
 5. User's Create Accounts and Log In. (map to player)
 6. Player Cannot Get A Bye Twice.
+7. Mark When Player No Longer Has A Chance At Top 8
