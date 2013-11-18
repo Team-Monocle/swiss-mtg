@@ -59,6 +59,9 @@ class Tournament < ActiveRecord::Base
     self.player_tournaments.sort_by{|p| -p.match_points }
   end
 
+  def find_or_create_player(name)
+    self.players.find_or_create_by(:name => name.downcase.titleize)
+  end
 
 
 

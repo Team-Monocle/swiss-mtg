@@ -5,6 +5,17 @@
   <%= @tournament.name %>
 </p>
 
+<%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
+<%= f.text_field :name, :value => "Name" %>
+<%= f.submit "Add Players" %>
+<% end %>
+
+<% if @tournament.number_of_rounds %>
+<h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long</h3>
+<h4> The Current Round is <%= @tournament.current_round %> </h4>
+<% end %>
+
+
 <ol>
   <% @tournament.order_players.each do |p| %>
     <li>
@@ -13,7 +24,10 @@
   <% end %>
 </ol>
 
+<% if @tournament.players.size >= 8 %>
 <%= button_to 'Generate Round', action: "generate_round" %>
+<% end %>
+
 
 <% if @tournament.current_round != "nil" %>
   <%= render 'round' %>

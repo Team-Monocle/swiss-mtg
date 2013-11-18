@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players]
 
   # GET /tournaments
   # GET /tournaments.json
@@ -10,6 +10,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1
   # GET /tournaments/1.json
   def show
+    @players = Player.all
   end
 
   # GET /tournaments/new
@@ -19,6 +20,11 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1/edit
   def edit
+  end
+
+  def add_players
+   @tournament.find_or_create_player(tournament_params["name"])
+   redirect_to @tournament
   end
 
   # POST /tournaments

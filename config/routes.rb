@@ -1,5 +1,7 @@
 SwissMtg::Application.routes.draw do
 
+  patch '/tournaments/:id/add_players', :to => 'tournaments#add_players'
+
   post '/tournaments/:id/generate_round', :to => 'tournaments#generate_round'
 
   resources :players
