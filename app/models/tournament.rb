@@ -5,11 +5,10 @@ class Tournament < ActiveRecord::Base
   has_many :user_tournaments
   has_many :users, through: :user_tournaments
 
-
   def generate
-    assess_rounds #this shouldn't be called every time -manley
     self.current_round ||= 0
     self.current_round += 1
+    assess_rounds if current_round == 1
     round_matches
     self.save
   end
@@ -41,11 +40,16 @@ class Tournament < ActiveRecord::Base
   end
 
   def round_matches
-    player_list = self.player_tournaments.to_a.shuffle 
-    player_list ||= self.order_players
+    if current_round == 1 #i just added this
+      player_list = self.player_tournaments.to_a.shuffle
+    else
+      player_list = self.order_players
+    end
+
     while player_list.size > 0
       if player_list.size == 1
         player_list[0].had_bye = true
+        player_list[0].save
       end
       self.matches.create(:player_1 => player_list.shift, :player_2 => player_list.shift, :round => self.current_round)
     end

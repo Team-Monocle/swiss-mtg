@@ -14,7 +14,7 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def match_points
-    match_wins * 3 #this is probably the problem. we're not giving points for draws! -manley
+    match_wins * 3 + match_draws
   end
 
   def game_points
