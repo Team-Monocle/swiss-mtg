@@ -1,23 +1,37 @@
 <table>
   <thead>
     <tr>
-      <th>Player 1</th>
       <th>Record</th>
+      <th>Player 1</th>
+      <th>Match Results</th>
       <th>Player 2</th>
       <th>Record</th>
+      <th></th>
     </tr>
   </thead>
-<% @tournament.matches.select{ |m| m.round == @tournament.current_round }.each do |match| %>
-  <tr>
-    <td><%= match.player_1.player.name %></td>
-    <td><%= match.player_1.record %></td>
-    <% if match.player_2 != nil %>
-      <td><%= match.player_2.player.name %></td>
-      <td><%= match.player_2.record %></td>
-    <% else %>
-      <td>BYE</td>
+
+  <% @tournament.matches.select{ |m| m.round == @tournament.current_round }.each do |match| %>
+    <tr>
+    <%= form_for match, url:  {action: "update_results"} do |f| %>
+      <td><%= match.player_1.record %></td>
+      <td><%= match.player_1.player.name %></td>
+      <td>
+        <%=f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]]))%>
+        <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]]))%>
+        <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]])) %>
+        <%= f.hidden_field :match_id, :value => match.id %>
+      </td>
+      <% if match.player_2 != nil %>
+        <td><%= match.player_2.player.name %></td>
+        <td><%= match.player_2.record %></td>
+      <% else %>
+        <td>BYE</td>
+      <% end %>
+      <td><%= f.submit "Update Results" %></td>
     <% end %>
-  </tr>
+    </tr>
 <% end %>
+
+
 
 </table>

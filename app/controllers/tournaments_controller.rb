@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players, :update_results]
 
   # GET /tournaments
   # GET /tournaments.json
@@ -43,6 +43,12 @@ class TournamentsController < ApplicationController
     end
   end
 
+  def update_results
+    match = Match.find(match_params[:match_id])
+    match.update(game_1: match_params[:game_1], game_2: match_params[:game_2], game_3: match_params[:game_3])
+    redirect_to @tournament
+  end
+
   # PATCH/PUT /tournaments/1
   # PATCH/PUT /tournaments/1.json
   def update
@@ -82,5 +88,9 @@ class TournamentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def tournament_params
       params.require(:tournament).permit(:name, :matches_id)
+    end
+
+    def match_params
+      params.require(:match).permit(:match_id, :game_1, :game_2, :game_3)
     end
 end
