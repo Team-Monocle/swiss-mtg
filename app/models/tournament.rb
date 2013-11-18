@@ -17,7 +17,7 @@ class Tournament < ActiveRecord::Base
     number_of_players = self.players.all.size
 
     case number_of_players
-      when 0..8
+      when 0...8
         #Throw Error
       when 8
         self.number_of_rounds = 3
@@ -60,7 +60,8 @@ class Tournament < ActiveRecord::Base
   end
 
   def find_or_create_player(name)
-    self.players.find_or_create_by(:name => name.downcase.titleize)
+    player = Player.find_or_create_by(:name => name.downcase.titleize)
+    self.player_tournaments.find_or_create_by(player_id: player.id)
   end
 
 

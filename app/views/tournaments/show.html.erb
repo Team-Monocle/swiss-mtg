@@ -6,7 +6,7 @@
 </p>
 
 <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
-<%= f.text_field :name, :value => "Name" %>
+<%= f.text_field :name, :value => "", placeholder: "Name" %>
 <%= f.submit "Add Players" %>
 <% end %>
 
@@ -26,14 +26,16 @@
 
 <% if @tournament.players.size >= 8 %>
 <%= button_to 'Generate Round', action: "generate_round" %>
+<% else %>
+The tournament must have at least 8 players.
 <% end %>
 
 
-<% if @tournament.current_round != "nil" %>
+<% if @tournament.current_round %>
   <%= render 'round' %>
 <% end %>
 
   
-
+<br>
 <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <%= link_to 'Back', tournaments_path %>
