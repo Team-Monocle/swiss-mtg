@@ -7,7 +7,7 @@ class Tournament < ActiveRecord::Base
 
 
   def generate
-    assess_rounds
+    assess_rounds #this shouldn't be called every time -manley
     self.current_round ||= 0
     self.current_round += 1
     round_matches
@@ -41,7 +41,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def round_matches
-    player_list = self.player_tournaments.to_a.shuffle if self.current_round == 1
+    player_list = self.player_tournaments.to_a.shuffle 
     player_list ||= self.order_players
     while player_list.size > 0
       if player_list.size == 1
