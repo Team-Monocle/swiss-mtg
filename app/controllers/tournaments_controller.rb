@@ -76,7 +76,7 @@ class TournamentsController < ApplicationController
   def generate_round
     if @tournament.round_complete
       redirect_to @tournament, notice: "Round #{@tournament.current_round} Matches Generated"
-      @tournament.generate
+      @tournament.generate 
     else
       redirect_to @tournament, notice: "New round pairings cannot be generated until the current round has been completed"
     end
