@@ -1,9 +1,12 @@
 Wishlist!
 
-1. Randomize Players With the Same Point Value Before Pairing.
-2. Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
-3. Other Wish Here.
-4. Allow Players To Update Round Results (From Their Phones?)
-5. User's Create Accounts and Log In. (map to player)
-6. Player Cannot Get A Bye Twice.
-7. Mark When Player No Longer Has A Chance At Top 8
+1. Generate finals brackets or end tournament and display top x
+2. Randomize Players With the Same Point Value Before Pairing.
+3. Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
+4. Display match results in select boxes or whatever
+5. Other Wish Here.
+6. Allow Players To Update Round Results (From Their Phones?)
+7. User's Create Accounts and Log In. (map to player)
+8. Player Cannot Get A Bye Twice.
+9. Mark When Player No Longer Has A Chance At Top 8
+10. add player dci numbers 
