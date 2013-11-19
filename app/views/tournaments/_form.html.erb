@@ -13,7 +13,15 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name %><br><br>
+    <%= f.label :format %><br>
+    <%= f.select(:format, options_for_select([["Swiss Pairings, With Finals", "Swiss Pairings, With Finals"], ["Swiss Pairings, Without Finals", "Swiss Pairings, Without Finals"]])) %><br><br>
+    <%= f.label :location %><br>
+    <%= f.text_field :location %><br><br>
+    <%= f.label :date %><br>
+    <%= f.date_select :date %><br><br>
+    <%= f.label :details %><br>
+    <%= f.text_area :details, cols: 50, rows: 10 %><br><br>
   </div>
   <div class="actions">
     <%= f.submit %>

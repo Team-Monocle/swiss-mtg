@@ -2,7 +2,15 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @tournament.name %>
+  <%= @tournament.name %><br>
+  <strong>Format:</strong>
+  <%= @tournament.format if @tournament.format %><br>
+  <strong>Date:</strong>
+  <%= @tournament.date if @tournament.date %><br>
+  <strong>Location:</strong>
+  <%= @tournament.location if @tournament.location %><br>
+  <strong>Details:</strong>
+  <%= @tournament.details if @tournament.details %><br>
 </p>
 
 <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
@@ -12,7 +20,6 @@
 
 <% if @tournament.number_of_rounds %>
 <h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long</h3>
-<h4> The Current Round is <%= @tournament.current_round %> </h4>
 <% end %>
 
 
@@ -28,12 +35,15 @@
   The tournament must have at least 8 players.
 <% elsif !@tournament.round_complete %>
   The next round can be generated once all matches are resolved
+<% elsif @tournament.current_round == @tournament.number_of_rounds %>
+  <%= button_to 'End Tournament', action: "end_tournament" %>
+  <%= button_to 'Generate Finals', action: "generate_finals" %>
 <% else %>
   <%= button_to 'Generate Next Round', action: "generate_round" %>
 <% end %>
 
 
-<% if @tournament.current_round %>
+<% if @tournament.current_round && !@tournament.finals? %>
   <%= render 'round' %>
 <% end %>
 

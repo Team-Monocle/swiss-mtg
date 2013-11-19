@@ -18,7 +18,7 @@ class Tournament < ActiveRecord::Base
 
     case number_of_players
       when 0...8
-        #Throw Error
+        #Throw Error; Is this deprecated due to dependencies to start tournament?
       when 8
         self.number_of_rounds = 3
       when 9...17
@@ -68,6 +68,21 @@ class Tournament < ActiveRecord::Base
     completed = self.matches.select {|m| m.game_1 != nil && (m.game_2 != nil || m.game_1 == 0)}
     completed.size == self.matches.size
   end
+
+  def finals?
+    current_round > number_of_rounds
+  end
+  # def generate_finals(number)
+  #     if number == 4
+  #       pair player one with player four
+  #       pair player two with player three
+  #     elsif number == 8 
+
+  # end
+
+  # def finals_bracket
+
+  # end
 
 
 end
