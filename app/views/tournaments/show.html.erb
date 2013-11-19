@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @tournament.name %><br>
@@ -13,40 +11,52 @@
   <%= @tournament.details if @tournament.details %><br>
 </p>
 
-<%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
-<%= f.text_field :name, :value => "", placeholder: "Name" %>
-<%= f.submit "Add Players" %>
-<% end %>
-
-<% if @tournament.number_of_rounds %>
-<h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long</h3>
-<% end %>
 
 
-<ol>
-  <% @tournament.order_players.each do |p| %>
-    <li>
-      <%= p.player.name %> | <%= p.match_points %> points | <%= (p.opponents_match_avg * 100).round(2) %>%
-    </li>
-  <% end %>
-</ol>
+<p id="notice"><%= notice %></p>
 
-<% if @tournament.players.size < 8 %>
-  The tournament must have at least 8 players.
-<% elsif !@tournament.round_complete %>
-  The next round can be generated once all matches are resolved
-<% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil %>
-  <%= button_to @tournament.end_message , action: "end_prelims" %>
-<% else %>
-  <%= button_to 'Generate Next Round', action: "generate_round" %>
-<% end %>
+<div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+          <% if @tournament.number_of_rounds %>
+          <h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long</h3>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
+          <%= f.text_field :name, :value => "", placeholder: "Name" %>
+          <%= f.submit "Add Players" %>
+          <% end %>
 
+          <br>
 
-<% if @tournament.current_round && !@tournament.finals? %>
-  <%= render 'round' %>
-<% end %>
+          <ol>
+            <% @tournament.order_players.each do |p| %>
+              <li>
+                <strong><%= p.player.name %></strong><br>
+                <%= p.match_points %> points | <%= p.record %> | <%= (p.opponents_match_avg * 100).round(2) %>%
+              </li>
+            <% end %>
+          </ol>
 
-  
-<br>
-<%= link_to 'Edit', edit_tournament_path(@tournament) %> |
-<%= link_to 'Back', tournaments_path %>
+          <% if @tournament.players.size < 8 %>
+            The tournament must have at least 8 players.
+          <% elsif !@tournament.round_complete %>
+            The next round can be generated once all matches are resolved
+          <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil %>
+            <%= button_to @tournament.end_message , action: "end_prelims" %>
+          <% else %>
+            <%= button_to 'Generate Next Round', action: "generate_round" %>
+          <% end %>
+        </div>
+        <div class="col-md-8">
+          <% if @tournament.current_round && !@tournament.finals? %>
+            <%= render 'round' %>
+          <% end %>
+        </div>
+
+    
+  <br>
