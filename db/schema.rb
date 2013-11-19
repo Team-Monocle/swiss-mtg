@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131119151215) do
+ActiveRecord::Schema.define(version: 20131119230603) do
 
   create_table "matches", force: true do |t|
     t.integer  "tournament_id"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20131119151215) do
     t.string   "location"
     t.date     "date"
     t.text     "details"
+    t.boolean  "finished"
   end
 
   create_table "user_tournaments", force: true do |t|

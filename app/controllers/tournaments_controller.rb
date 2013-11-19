@@ -83,7 +83,8 @@ class TournamentsController < ApplicationController
   end
 
    def end_prelims
-    
+    @tournament.finished = true
+    @tournament.save
     redirect_to @tournament
   end
 

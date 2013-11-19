@@ -89,9 +89,5 @@ class Tournament < ActiveRecord::Base
   def render_results
     self.player_tournaments.sort_by{|p| [-p.match_points, -p.opponents_match_avg, -p.game_win_percent, -p.opponents_game_avg] }
   end
-  # def finals_bracket
-
-  # end
-
 
 end

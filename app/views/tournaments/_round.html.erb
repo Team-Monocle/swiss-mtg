@@ -1,6 +1,8 @@
 <table style="text-align: center;">
   <thead>
+    <% if !@tournament.finished %>
     <tr><h4> The Current Round is <%= @tournament.current_round %> </h4></tr>
+   <% end %>
     <tr>
       <th>Player 1</th>
       <th>Match Results</th>
@@ -21,7 +23,9 @@
           <%= f.hidden_field :match_id, :value => match.id %>
         </td>
         <td><%= match.player_2.player.name %></td>
+        <% if !@tournament.finished %>
         <td><%= f.submit "Update Results" %></td>
+        <% end %>
       <% else %>
         <td>
           <%= f.hidden_field :game_1, :value => match.player_1_id %>
@@ -34,7 +38,7 @@
     <% end %>
     </tr>
 <% end %>
-
+ 
 
 
 </table>

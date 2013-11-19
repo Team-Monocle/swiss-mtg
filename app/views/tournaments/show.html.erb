@@ -1,14 +1,18 @@
-<p>
+<br>
+<br>
+<br>
+<br>
+<p style="text-align: center;">
   <strong>Name:</strong>
-  <%= @tournament.name %><br>
+  <%= @tournament.name %> | 
   <strong>Format:</strong>
-  <%= @tournament.format if @tournament.format %><br>
+  <%= @tournament.format if @tournament.format %> | 
   <strong>Date:</strong>
-  <%= @tournament.date if @tournament.date %><br>
+  <%= @tournament.date if @tournament.date %> | 
   <strong>Location:</strong>
-  <%= @tournament.location if @tournament.location %><br>
+  <%= @tournament.location if @tournament.location %> | 
   <strong>Details:</strong>
-  <%= @tournament.details if @tournament.details %><br>
+  <%= @tournament.details if @tournament.details %>
 </p>
 
 
@@ -19,17 +23,22 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-12" style="text-align: center;">
-          <% if @tournament.number_of_rounds %>
+          <% if @tournament.number_of_rounds && !@tournament.finished %>
           <h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long</h3>
+          <% elsif @tournament.finished %>
+          <h3> The Tournament is Finished. </h3>
           <% end %>
         </div>
       </div>
       <div class="row" >
         <div class="col-md-4" >
+          <% if !@tournament.current_round %>
           <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
           <%= f.text_field :name, :value => "", placeholder: "Name" %>
           <%= f.submit "Add Players" %>
           <% end %>
+          <% end %>
+
 
           <br>
 
@@ -42,13 +51,13 @@
             <% end %>
           </ol>
 
-          <% if @tournament.players.size < 8 %>
+          <% if @tournament.players.size < 8 && !@tournament.finished %>
             The tournament must have at least 8 players.
           <% elsif !@tournament.round_complete %>
             The next round can be generated once all matches are resolved
-          <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil %>
+          <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
             <%= button_to @tournament.end_message , action: "end_prelims" %>
-          <% else %>
+          <% elsif !@tournament.finished %>
             <%= button_to 'Generate Next Round', action: "generate_round" %>
           <% end %>
         </div>
