@@ -56,6 +56,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def order_players
+    # binding.pry
     self.player_tournaments.sort_by{|p| [-p.match_points, -p.opponents_match_avg, -p.game_win_percent, -p.opponents_game_avg] }
   end
 
@@ -69,7 +70,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def round_complete
-    completed = self.matches.select {|m| m.game_1 != nil && (m.game_2 != nil || m.game_1 == 0)}
+    completed = self.matches.select {|m| m.game_1 != nil }
     completed.size == self.matches.size
   end
 

@@ -2,11 +2,9 @@
   <thead>
     <tr><h4> The Current Round is <%= @tournament.current_round %> </h4></tr>
     <tr>
-      <th>Record</th>
       <th>Player 1</th>
       <th>Match Results</th>
       <th>Player 2</th>
-      <th>Record</th>
       <th></th>
     </tr>
   </thead>
@@ -14,7 +12,6 @@
   <% @tournament.matches.select{ |m| m.round == @tournament.current_round }.each do |match| %>
     <tr style="<%= "background-color: grey;" if match.finished? %>">
     <%= form_for match, url:  {action: "update_results"} do |f| %>
-      <td><%= match.player_1.record %></td>
       <td><%= match.player_1.player.name %></td>
       <% if match.player_2 != nil %>
         <td>
@@ -24,7 +21,6 @@
           <%= f.hidden_field :match_id, :value => match.id %>
         </td>
         <td><%= match.player_2.player.name %></td>
-        <td><%= match.player_2.record %></td>
         <td><%= f.submit "Update Results" %></td>
       <% else %>
         <td>
@@ -33,7 +29,6 @@
           <%= f.hidden_field :match_id, :value => match.id %>
         </td>
         <td>BYE</td>
-        <td></td>
         <td><%= f.submit "Confirm Bye" %></td>
       <% end %>
     <% end %>

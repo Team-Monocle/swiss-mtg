@@ -26,11 +26,13 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def game_win_percent
+    return 0 if self.matches_played.size == 0
     self.game_points / (games * 3.0)
   end
 
   def match_win_percent
-    self.match_wins / (self.matches_played.size * 1.0)
+    return 0 if self.matches_played.size == 0
+    (self.match_wins * 3 + self.match_draws) / (self.matches_played.size * 3.0)
   end
 
   def match_wins
@@ -39,7 +41,7 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if m.game_1 == self.id
       total += 1 if m.game_2 == self.id 
       total += 1 if m.game_3 == self.id
-      total = 2 if (total == 1 && m.game_2 == 0 && m.game_3 == nil)
+      total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
       total == 2
     end
     wins.length
@@ -51,7 +53,7 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if (m.game_1 != self.id) && (m.game_1 != nil) && (m.game_1 != 0) 
       total += 1 if (m.game_2 != self.id) && (m.game_2 != nil) && (m.game_2 != 0)
       total += 1 if (m.game_3 != self.id) && (m.game_3 != nil) && (m.game_3 != 0)
-      total = 2 if (total == 1 && m.game_2 == 0 && m.game_3 == nil)
+      total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
       total == 2
     end
     losses.length
@@ -93,10 +95,11 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def matches_played
-    self.matches.select{|m| m.player_2_id != nil}
+    self.finished_matches.select{|m| m.player_2_id != nil}
   end
 
   def opponents_game_avg
+    return 0 if self.matches_played.size == 0
     played = self.matches_played
     points = played.collect do |m|
       if m.player_1_id != self.id
@@ -111,6 +114,7 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def opponents_match_avg
+    return 0 if self.matches_played.size == 0
     points = self.matches_played.collect do |m|
       if m.player_1_id != self.id
         m.player_1.match_win_percent
