@@ -35,9 +35,8 @@
   The tournament must have at least 8 players.
 <% elsif !@tournament.round_complete %>
   The next round can be generated once all matches are resolved
-<% elsif @tournament.current_round == @tournament.number_of_rounds %>
-  <%= button_to 'End Tournament', action: "end_tournament" %>
-  <%= button_to 'Generate Finals', action: "generate_finals" %>
+<% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil %>
+  <%= button_to @tournament.end_message , action: "end_prelims" %>
 <% else %>
   <%= button_to 'Generate Next Round', action: "generate_round" %>
 <% end %>

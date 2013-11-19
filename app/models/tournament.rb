@@ -64,6 +64,10 @@ class Tournament < ActiveRecord::Base
     self.player_tournaments.find_or_create_by(player_id: player.id)
   end
 
+  def end_message
+    self.format == "Swiss Pairings, Without Finals" ? "End Tournament" : "Generate Finals"
+  end
+
   def round_complete
     completed = self.matches.select {|m| m.game_1 != nil && (m.game_2 != nil || m.game_1 == 0)}
     completed.size == self.matches.size

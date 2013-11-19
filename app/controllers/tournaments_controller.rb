@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players, :update_results]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players, :update_results, :end_prelims]
 
   # GET /tournaments
   # GET /tournaments.json
@@ -80,6 +80,10 @@ class TournamentsController < ApplicationController
     else
       redirect_to @tournament, notice: "New round pairings cannot be generated until the current round has been completed"
     end
+  end
+
+   def end_prelims
+    redirect_to @tournament
   end
 
   private
