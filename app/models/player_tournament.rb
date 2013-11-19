@@ -26,7 +26,11 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def game_win_percent
-    self.game_points / (games * 3)
+    self.game_points / (games * 3.0)
+  end
+
+  def match_win_percent
+    self.match_wins / (self.matches_played.size * 1.0)
   end
 
   def match_wins
@@ -87,4 +91,39 @@ class PlayerTournament < ActiveRecord::Base
     draws
 
   end
+
+  def matches_played
+    self.matches.select{|m| m.player_2_id != nil}
+  end
+
+  def opponents_game_avg
+    played = self.matches_played
+    points = played.collect do |m|
+      if m.player_1_id != self.id
+        m.player_1.game_win_percent
+      else
+        m.player_2.game_win_percent
+      end
+    end
+
+    points.inject{|total, n| total += n } / (played.size * 1.0)
+
+  end
+
+  def opponents_match_avg
+    points = self.matches_played.collect do |m|
+      if m.player_1_id != self.id
+        m.player_1.match_win_percent
+      else
+        m.player_2.match_win_percent
+      end
+    end
+    points.inject{|total, n| total += n } / (self.matches_played.size * 1.0)
+  end
+
+
+
+
+
+
 end

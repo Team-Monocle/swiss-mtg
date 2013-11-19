@@ -26,7 +26,7 @@
 <ol>
   <% @tournament.order_players.each do |p| %>
     <li>
-      <%= p.player.name %> | <%= p.match_points %> points
+      <%= p.player.name %> | <%= p.match_points %> points | <%= (p.opponents_match_avg * 100).round(2) %>%
     </li>
   <% end %>
 </ol>

@@ -12,7 +12,7 @@
   </thead>
 
   <% @tournament.matches.select{ |m| m.round == @tournament.current_round }.each do |match| %>
-    <tr>
+    <tr style="<%= "background-color: grey;" if match.finished? %>">
     <%= form_for match, url:  {action: "update_results"} do |f| %>
       <td><%= match.player_1.record %></td>
       <td><%= match.player_1.player.name %></td>

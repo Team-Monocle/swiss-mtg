@@ -6,5 +6,9 @@ class Match < ActiveRecord::Base
   def self.finished
     self.where("game_1 IS NOT null")
   end
+
+  def finished?
+    self.game_1
+  end
 end
 
