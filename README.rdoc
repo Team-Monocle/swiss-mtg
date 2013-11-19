@@ -12,3 +12,4 @@ Wishlist!
 10. Player Cannot Get A Bye Twice.
 11. Mark When Player No Longer Has A Chance At Top 8
 12. add player dci numbers 
+13. jquery to submit all "update results" forms with single button
