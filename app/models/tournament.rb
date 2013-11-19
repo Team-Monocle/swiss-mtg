@@ -76,14 +76,18 @@ class Tournament < ActiveRecord::Base
   def finals?
     current_round > number_of_rounds
   end
-  # def generate_finals(number)
-  #     if number == 4
-  #       pair player one with player four
-  #       pair player two with player three
-  #     elsif number == 8 
 
-  # end
+  def generate_finals
+    # if number == 4
+    #   pair player one with player four
+    #   pair player two with player three
+    # elsif number == 8 
+  end
 
+
+  def render_results
+    @tournament.players
+  end
   # def finals_bracket
 
   # end
