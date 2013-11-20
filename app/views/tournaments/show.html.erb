@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-md-12" style="text-align: center;">
           <% if @tournament.number_of_rounds && !@tournament.finished %>
-          <h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long</h3>
+          <h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long - Currently Round <%= @tournament.current_round %></h3>
           <% elsif @tournament.finished %>
           <h3> The Tournament is Finished. </h3>
           <% end %>

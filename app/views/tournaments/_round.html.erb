@@ -1,51 +1,75 @@
-<table style="text-align: center;">
-  <thead>
-    <% if !@tournament.finished %>
-    <tr><h4> The Current Round is <%= @tournament.current_round %> </h4></tr>
-    <% else %>
-    <br>
-   <% end %>
-    <tr>
-      <th style="text-align: center;">Player 1</th>
-      <th style="text-align: center;">Match Results</th>
-      <th style="text-align: center;">Player 2</th>
-      <th></th>
-    </tr>
-  </thead>
-  <br>
-  <% @tournament.matches.select{ |m| m.round == @tournament.current_round }.each do |match| %>
-    <tr style="<%= "background-color: grey;" if match.finished? %>">
-    <%= form_for match, url:  {action: "update_results"} do |f| %>
-      <td><%= match.player_1.player.name %></td>
-      <% if match.player_2 != nil %>
-        <td>
-          <%= f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_1))%>
-          <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_2))%>
-          <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_3)) %>
-          <%= f.hidden_field :match_id, :value => match.id %>
-        </td>
-        <td><%= match.player_2.player.name %></td>
-        <% if !@tournament.finished %>
-        <td><%= f.submit "Update Results" %></td>
-        <% end %>
-      <% else %>
-        <td>
-          <%= f.hidden_field :game_1, :value => match.player_1_id %>
-          <%= f.hidden_field :game_2, :value => match.player_1_id %>
-          <%= f.hidden_field :match_id, :value => match.id %>
-        </td>
-
-        <% if !@tournament.finished %>
-          <td>BYE</td>
-          <td><%= f.submit "Confirm Bye" %></td>
-          <% else %>
-          <td></td>
-        <% end %>
+<ul class="nav nav-tabs" id="roundtabs">
+  <% @tournament.number_of_rounds.times do |n| %>
+    <li><a href="#round-<%= n + 1 %>" data-toggle="tab"
+      <% if @tournament.current_round < n + 1 %>
+        style="color: grey;"
       <% end %>
+      >Round <%= n + 1 %></a></li>
+  <% end %>
+</ul>
+
+
+
+<div class="tab-content">
+  <% @tournament.number_of_rounds.times do |round_n| %>
+  <div class="tab-pane" id="round-<%= round_n + 1 %>">
+    <% if (round_n + 1) > @tournament.current_round %>
+      <h3>Round Not Started</h3>
+    <% else %>
+      <table style="text-align: center;">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Player 1</th>
+            <th style="text-align: center;">Match Results</th>
+            <th style="text-align: center;">Player 2</th>
+            <th></th>
+          </tr>
+        </thead>
+        <br>
+        <% @tournament.matches.select{ |m| m.round == round_n + 1 }.each do |match| %>
+          <tr style="<%= "background-color: grey;" if match.finished? %>">
+          <%= form_for match, url:  {action: "update_results"} do |f| %>
+            <td><%= match.player_1.player.name %></td>
+            <% if match.player_2 != nil %>
+              <td>
+                <%= f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_1))%>
+                <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_2))%>
+                <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_3)) %>
+                <%= f.hidden_field :match_id, :value => match.id %>
+              </td>
+              <td><%= match.player_2.player.name %></td>
+              <% if !@tournament.finished %>
+                <td><%= f.submit "Update Results" %></td>
+              <% end %>
+            <% else %>
+              <td>
+                <%= f.hidden_field :game_1, :value => match.player_1_id %>
+                <%= f.hidden_field :game_2, :value => match.player_1_id %>
+                <%= f.hidden_field :match_id, :value => match.id %>
+              </td>
+
+              <% if !@tournament.finished %>
+                <td>BYE</td>
+                <td><%= f.submit "Confirm Bye" %></td>
+              <% else %>
+                <td></td>
+              <% end %>
+            <% end %>
+          <% end %>
+          </tr>
+        <% end %>
+      </table>
     <% end %>
-    </tr>
-<% end %>
- 
+  </div>
+  <% end %>
+</div>
+
+<script>
+  $(function(){
+    $('#roundtabs a[href="#round-<%= @tournament.current_round %>"]').tab('show');
+  });
+</script>
 
 
-</table>
+
+
