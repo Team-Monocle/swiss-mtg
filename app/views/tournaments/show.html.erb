@@ -76,4 +76,13 @@
     
   <br>
 
-
+<% if @tournament.current_round != nil %>
+<script>$(function(){
+  //get height for 2
+  var barHeight = $('.nav-tabs').height();
+  var bar2Height = $('.tab-pane').height();
+  var col2Height = barHeight + bar2Height;
+  //set height for 1
+  col2Height > 350 ? $('#player_sidebar').height(col2Height) : $('#player_sidebar').height("350px");
+});</script>
+<% end %>
