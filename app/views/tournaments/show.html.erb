@@ -15,10 +15,6 @@
   <%= @tournament.details if @tournament.details %>
 </p>
 
-
-
-<p id="notice"><%= notice %></p>
-
 <div class="container">
       <!-- Example row of columns -->
       <div class="row">
@@ -30,6 +26,19 @@
           <% end %>
         </div>
       </div>
+
+      <p id="notice" style="text-align: center;"><%= notice %></p>
+    <div style="text-align:center;">
+      <% if @tournament.players.size < 8 && !@tournament.finished %>
+        The tournament must have at least 8 players.
+      <% elsif !@tournament.round_complete %>
+        The next round can be generated once all matches are resolved
+      <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
+        <%= button_to @tournament.end_message , action: "end_prelims" %>
+      <% elsif !@tournament.finished && @tournament.round_complete %>
+        <%= button_to 'Generate Next Round', action: "generate_round" %>
+      <% end %>
+    </div><br>
 
       <div class="row">
         <div class="pairings_container">
@@ -43,8 +52,7 @@
           <% end %>
 
 
-          <br>
-
+          <h4 id="standings_style"> Standings </h4>
           <ol>
             <% @tournament.order_players.each do |p| %>
               <li>
@@ -54,16 +62,7 @@
             <% end %>
           </ol>
 
-          <% if @tournament.players.size < 8 && !@tournament.finished %>
-            The tournament must have at least 8 players.
-          <% elsif !@tournament.round_complete %>
-            The next round can be generated once all matches are resolved
-          <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
-            <%= button_to @tournament.end_message , action: "end_prelims" %>
-          <% elsif !@tournament.finished %>
-            <%= button_to 'Generate Next Round', action: "generate_round" %>
-          <% end %>
-        </div>
+      </div>
 
         <div class="col-md-8" id="pairing_sidebar" style="text-align: center;" >
           <% if @tournament.current_round && !@tournament.finals? %>
