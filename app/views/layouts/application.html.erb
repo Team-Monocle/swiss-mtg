@@ -17,21 +17,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Tournament Manager</a>
+          <a class="navbar-brand" href="/">Tourn.io</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
+          <form class="navbar-right navbar-brand">              
               <% if user_signed_in? %>
-                <p class="navbar-brand">
                 <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
-                </p>
-                <% else %>
-                <p class="navbar-brand">
+              <% else %>
                 <%= link_to('Login', new_user_session_path)  %>  
-                </p>
-                <% end %>
-            </div>
+              <% end %>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -40,17 +34,16 @@
     <p class="alert"><%= alert %></p>
 
 
-<div class="container" style="text-align: center;">
+<div class="container" style="text-align: center; margin-bottom: 25px;">
 
 <%= yield %>
 
 </div>
 
 
-      <hr>
-      <footer >  &copy;2013 Team Monocle
+      <footer style="text-align: center; background-color: white; border-top: 1px solid #CCC; padding-bottom: 5px;" class="navbar-fixed-bottom"> 
+        &copy;2013 Team Monocle
       </footer>
-    </div> <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript
