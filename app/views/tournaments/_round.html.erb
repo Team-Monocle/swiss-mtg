@@ -6,9 +6,9 @@
     <br>
    <% end %>
     <tr>
-      <th>Player 1</th>
-      <th>Match Results</th>
-      <th>Player 2</th>
+      <th style="text-align: center;">Player 1</th>
+      <th style="text-align: center;">Match Results</th>
+      <th style="text-align: center;">Player 2</th>
       <th></th>
     </tr>
   </thead>
@@ -19,9 +19,9 @@
       <td><%= match.player_1.player.name %></td>
       <% if match.player_2 != nil %>
         <td>
-          <%= f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]]))%>
-          <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]]))%>
-          <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]])) %>
+          <%= f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_1))%>
+          <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_2))%>
+          <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_3)) %>
           <%= f.hidden_field :match_id, :value => match.id %>
         </td>
         <td><%= match.player_2.player.name %></td>

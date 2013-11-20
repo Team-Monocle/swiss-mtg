@@ -30,8 +30,11 @@
           <% end %>
         </div>
       </div>
-      <div class="row" >
-        <div class="col-md-4" >
+
+      <div class="row">
+        <div class="pairings_container">
+          <div class="player_list_container">
+        <div class="col-md-4" id="player_sidebar" >
           <% if !@tournament.current_round %>
           <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
           <%= f.text_field :name, :value => "", placeholder: "Name" %>
@@ -61,12 +64,15 @@
             <%= button_to 'Generate Next Round', action: "generate_round" %>
           <% end %>
         </div>
-        <div class="col-md-8" style="text-align: center;" >
+
+        <div class="col-md-8" id="pairing_sidebar" style="text-align: center;" >
           <% if @tournament.current_round && !@tournament.finals? %>
             <%= render 'round' %>
           <% end %>
         </div>
-
+      </div>
+    </div>
+  </div>
     
   <br>
 

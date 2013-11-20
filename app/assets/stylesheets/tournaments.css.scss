@@ -1,4 +1,28 @@
-// Place all the styles related to the tournaments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.pairings_container {
+  float:left;
+  width: 100%;
+  position:relative;
+  right:30%;
+}
 
+.player_list_container {
+  float:left;
+  width:100%;
+  position:relative;
+  right:40%;
+}
+
+.col-md-4 {
+  float:left;
+  position:relative;
+  left:76%;
+  overflow:auto;
+
+}
+
+.col-md-8 {
+  float:left;
+  position: relative;
+  left:80%;
+  overflow:hidden;
+}
