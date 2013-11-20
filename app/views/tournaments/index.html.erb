@@ -1,35 +1,18 @@
-<br>
-<br>
-<br>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Listing Tournaments</h1>
-          <table>
-            <thead>
-              <tr>
-              <th>Name</th>
-              <th></th>
-              <th></th>
-              </tr>
-              </thead>
 
-              <tbody>
-              <% @tournaments.each do |tournament| %>
-                <tr>
-                <td><%= link_to tournament.name, tournament %></td>
-                
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-            <br>
-            <% if current_user %>
-              <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="titleything">Tournaments</h1>
+            
+            <% @tournaments.each do |tournament| %>
+             <h3> <%= link_to tournament.name, tournament %> </h3>
             <% end %>
-      </div>
+            
+          <br>
+          <% if current_user %>
+            <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
+          <% end %>
     </div>
   </div>
-<br>
+
 
 

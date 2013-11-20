@@ -6,7 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
 tournament1= Tournament.create(name: "test")
+
+UserTournament.create(tournament_id: tournament1.id, user_id: 5)
 
 31.times do
   tournament1.players.build(:name => Faker::Name.name)

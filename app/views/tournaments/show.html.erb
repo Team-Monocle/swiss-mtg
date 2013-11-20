@@ -1,10 +1,5 @@
-<br>
-<br>
-<br>
-<br>
-<p style="text-align: center;">
-  <strong>Name:</strong>
-  <%= @tournament.name %> | 
+<h2><%= @tournament.name %></h2> 
+<p >
   <strong>Format:</strong>
   <%= @tournament.format if @tournament.format %> | 
   <strong>Date:</strong>
@@ -15,10 +10,10 @@
   <%= @tournament.details if @tournament.details %>
 </p>
 
-<div class="container">
+
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-12" style="text-align: center;">
+        <div class="col-md-12" >
           <% if @tournament.number_of_rounds && !@tournament.finished %>
           <h3> This Tournament Will Be <%= @tournament.number_of_rounds %> Rounds Long - Currently Round <%= @tournament.current_round %></h3>
           <% elsif @tournament.finished %>
@@ -27,8 +22,8 @@
         </div>
       </div>
 
-      <p id="notice" style="text-align: center;"><%= notice %></p>
-    <div style="text-align:center;">
+      <p id="notice" ><%= notice %></p>
+    <div >
       <% if current_user && current_user.id == @tournament.users[0].id%>
         <% if @tournament.players.size < 8 && !@tournament.finished %>
           The tournament must have at least 8 players.
@@ -55,7 +50,7 @@
 
 
           <h4 id="standings_style"> Standings </h4>
-          <ol>
+          <ol style="text-align: left;">
             <% @tournament.order_players.each do |p| %>
               <li>
                 <strong><%= p.player.name %></strong><br>
@@ -66,7 +61,7 @@
 
       </div>
 
-        <div class="col-md-8" id="pairing_sidebar" style="text-align: center;" >
+        <div class="col-md-8" id="pairing_sidebar" >
           <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id  %>
             <%= render 'round' %>
           <% elsif @tournament.current_round %>
@@ -75,7 +70,7 @@
         </div>
       </div>
     </div>
-  </div>
+ 
     
   <br>
 
