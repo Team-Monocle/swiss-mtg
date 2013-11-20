@@ -1,6 +1,8 @@
 class TournamentsController < ApplicationController
   before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players, :update_results, :end_prelims]
 
+  skip_before_filter :authenticate_user!, only: [:index, :show]
+
   # GET /tournaments
   # GET /tournaments.json
   def index

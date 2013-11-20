@@ -18,14 +18,15 @@
               <% @tournaments.each do |tournament| %>
                 <tr>
                 <td><%= link_to tournament.name, tournament %></td>
-                <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
-                <td><%= link_to 'Destroy', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                
                 </tr>
               <% end %>
               </tbody>
             </table>
             <br>
-            <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
+            <% if current_user %>
+              <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
+            <% end %>
       </div>
     </div>
   </div>

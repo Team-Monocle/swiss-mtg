@@ -1,0 +1,92 @@
+<ul class="nav nav-tabs" id="roundtabs">
+  <% @tournament.number_of_rounds.times do |n| %>
+    <li><a href="#round-<%=
+ n + 1 %>" data-toggle="tab"
+      <% if @tournament.current_round < n + 1 %>
+        style="color: grey;"
+      <% end %>
+      >Round <%= n + 1 %></a></li>
+  <% end %>
+</ul>
+
+
+<div class="tab-content">
+  <% @tournament.number_of_rounds.times do |round_n| %>
+  <div class="tab-pane" id="round-<%= round_n + 1 %>">
+    <% if (round_n + 1) > @tournament.current_round %>
+      <h3>Round Not Started</h3>
+    <% else %>
+      <table style="text-align: center;">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Player 1</th>
+            <th style="text-align: center;">Match Results</th>
+            <th style="text-align: center;">Player 2</th>
+            <th></th>
+          </tr>
+        </thead>
+        <br>
+        <% @tournament.matches.select{ |m| m.round == round_n + 1 }.each do |match| %>
+          <tr style="<%= "background-color: grey;" if match.finished? %>">
+            <td><%= match.player_1.player.name %></td>
+            <% if match.player_2 != nil %>
+              <td>
+                
+                <% if match.game_1 && match.game_1 == match.player_1_id %>
+                  P1
+                <% elsif match.game_1 && match.game_1 == match.player_2_id %>
+                  P2
+                <% elsif match.game_3 == 0 %>
+                  D
+                <% else %>
+                  -
+                <% end %>
+
+                <% if match.game_2 && match.game_2 == match.player_1_id %>
+                  P1
+                <% elsif match.game_2 && match.game_2 == match.player_2_id %>
+                  P2
+                <% elsif match.game_3 == 0 %>
+                  D
+                <% else %>
+                  -
+                <% end %>
+
+                <% if match.game_3 && match.game_3 == match.player_1_id %>
+                  P1
+                <% elsif match.game_3 && match.game_3 == match.player_2_id %>
+                  P2
+                <% elsif match.game_3 == 0 %>
+                  D
+                <% else %>
+                  -
+                <% end %>
+
+              </td>
+              <td><%= match.player_2.player.name %></td>
+              
+            <% else %>
+              <td>
+                
+              </td>
+
+                <td>BYE</td>
+                <td></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+<script>
+  $(function(){
+    $('#roundtabs a[href="#round-<%= @tournament.current_round %>"]').tab('show');
+  });
+</script>
+
+
+
+

@@ -29,26 +29,28 @@
 
       <p id="notice" style="text-align: center;"><%= notice %></p>
     <div style="text-align:center;">
-      <% if @tournament.players.size < 8 && !@tournament.finished %>
-        The tournament must have at least 8 players.
-      <% elsif !@tournament.round_complete %>
-        The next round can be generated once all matches are resolved
-      <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
-        <%= button_to @tournament.end_message , action: "end_prelims" %>
-      <% elsif !@tournament.finished && @tournament.round_complete %>
-        <%= button_to 'Generate Next Round', action: "generate_round" %>
-      <% end %>
+      <% if current_user && current_user.id == @tournament.users[0].id%>
+        <% if @tournament.players.size < 8 && !@tournament.finished %>
+          The tournament must have at least 8 players.
+        <% elsif !@tournament.round_complete %>
+          The next round can be generated once all matches are resolved
+        <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
+          <%= button_to @tournament.end_message , action: "end_prelims" %>
+        <% elsif !@tournament.finished %>
+          <%= button_to 'Generate Next Round', action: "generate_round" %>
+        <% end %>
+      <%end%>
     </div><br>
 
       <div class="row">
         <div class="pairings_container">
           <div class="player_list_container">
         <div class="col-md-4" id="player_sidebar" >
-          <% if !@tournament.current_round %>
-          <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
-          <%= f.text_field :name, :value => "", placeholder: "Name" %>
-          <%= f.submit "Add Players" %>
-          <% end %>
+          <% if current_user && !@tournament.current_round && current_user.id == @tournament.users[0].id%>
+            <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
+            <%= f.text_field :name, :value => "", placeholder: "Name" %>
+            <%= f.submit "Add Players" %>
+            <% end %>
           <% end %>
 
 
@@ -65,8 +67,10 @@
       </div>
 
         <div class="col-md-8" id="pairing_sidebar" style="text-align: center;" >
-          <% if @tournament.current_round && !@tournament.finals? %>
+          <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id  %>
             <%= render 'round' %>
+          <% elsif @tournament.current_round %>
+            <%= render 'public_round'%>
           <% end %>
         </div>
       </div>
