@@ -43,15 +43,25 @@ class Tournament < ActiveRecord::Base
     if current_round == 1 #i just added this
       player_list = self.player_tournaments.to_a.shuffle
     else
-      player_list = self.order_players
+      player_list = already_bye?
     end
-
     while player_list.size > 0
       if player_list.size == 1
         player_list[0].had_bye = true
         player_list[0].save
       end
       self.matches.create(:player_1 => player_list.shift, :player_2 => player_list.shift, :round => self.current_round)
+    end
+  end
+
+  def already_bye?
+    players = self.order_players.to_a
+    if players[-1].had_bye
+      next_bye = players.reverse[0..-2].detect { |player| !player.had_bye }
+      players.delete(next_bye)
+      players << next_bye
+    else
+      players
     end
   end
 

@@ -4,16 +4,20 @@ Wishlist!
 2. Randomize Players With the Same Point Value Before Pairing.
 3. Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
 4. Display match results in select boxes or whatever
-5. admin should be able to adjust user stats within his/her tournament (e.g. after round results have been submitted)
+5. admin should be able to adjust user stats within his/her tournament (e.g. after round results have been submitted) --maybe also manually alter match
 6. security
 7. Other Wish Here.
 8. Allow Players To Update Round Results (From Their Phones?)
 9. User's Create Accounts and Log In. (map to player)
-10. Player Cannot Get A Bye Twice.
-11. Mark When Player No Longer Has A Chance At Top 8
-12. add player dci numbers 
-13. jquery to submit all "update results" forms with single button
+10. Mark When Player No Longer Has A Chance At Top 8
+11. add player dci numbers (when adding players to tournament, do 'find_or_create_by(dci:')
+12. jquery to submit all "update results" forms with single button
 
 
 now!!!:
 
+
+1. jon grover and sex and frontend
+2. authentication
+3. secure player view pages
+4. wishlist
