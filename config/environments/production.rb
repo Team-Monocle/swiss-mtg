@@ -1,4 +1,9 @@
 SwissMtg::Application.configure do
+
+  # raise "FORGOT TO SET default_url_options IN CONFIG/ENVIRONMENTS/PRODUCTION"
+  config.action_mailer.default_url_options = { :host => 'tourn.io' }
+
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
