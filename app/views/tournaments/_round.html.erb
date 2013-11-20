@@ -32,7 +32,6 @@
           <%= f.hidden_field :game_2, :value => match.player_1_id %>
           <%= f.hidden_field :match_id, :value => match.id %>
         </td>
-        head>
         <% if !@tournament.finished %>
           <td>BYE</td>
           <td><%= f.submit "Confirm Bye" %></td>
