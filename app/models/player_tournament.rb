@@ -4,13 +4,16 @@ class PlayerTournament < ActiveRecord::Base
   has_many :matches_as_1, foreign_key: "player_1_id",class_name: "Match"
   has_many :matches_as_2, foreign_key: "player_2_id",class_name: "Match"
 
+  has_many :finished_matches_as_1, foreign_key: "player_1_id",class_name: "Match", :conditions => ['game_1 IS NOT NULL']
+  has_many :finished_matches_as_2, foreign_key: "player_2_id",class_name: "Match", :conditions => ['game_1 IS NOT NULL']
+
 
   def matches
     self.matches_as_1 + self.matches_as_2
   end
 
   def finished_matches
-    self.matches_as_1.finished + self.matches_as_2.finished
+    self.finished_matches_as_1 + self.finished_matches_as_2
   end
 
   def match_points

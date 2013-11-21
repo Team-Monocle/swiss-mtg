@@ -67,7 +67,7 @@ class Tournament < ActiveRecord::Base
 
   def order_players
     # binding.pry
-    self.player_tournaments.sort_by{|p| [-p.match_points, -p.opponents_match_avg, -p.game_win_percent, -p.opponents_game_avg] }
+    self.player_tournaments.includes(:finished_matches_as_1, :finished_matches_as_2).sort_by{|p| [-p.match_points, -p.opponents_match_avg, -p.game_win_percent, -p.opponents_game_avg] }
   end
 
   def find_or_create_player(name)
