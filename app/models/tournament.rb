@@ -14,8 +14,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def re_generate
-    self.matches.last.player_1.update(had_bye: false)
-
+    self.matches.last.player_1.update(had_bye: false) #bad
     self.matches.where(round: self.current_round).destroy_all
     round_matches
   end
