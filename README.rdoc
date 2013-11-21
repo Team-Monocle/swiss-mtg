@@ -6,6 +6,8 @@ Wishlist!
 -remove players from playerlist before tournament begins
 
 
+-Generate finals brackets or end tournament and display top x
+
 
 -alert messages for wrong email/password combo and reset password email has been sent!
 -add player dci numbers (when adding players to tournament, do 'find_or_create_by(dci:')
@@ -14,7 +16,6 @@ Wishlist!
 
 
 
--Generate finals brackets or end tournament and display top x
 
 
 -users submit results 
