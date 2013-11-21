@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players, :update_results, :end_prelims]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :re_generate_round, :add_players, :remove_player, :update_results, :end_prelims]
 
   skip_before_filter :authenticate_user!, only: [:index, :show]
 
@@ -33,6 +33,18 @@ class TournamentsController < ApplicationController
    @tournament.find_or_create_player(tournament_params["name"])
    redirect_to @tournament
   end
+
+  def remove_player
+    if current_user && current_user.id == @tournament.users[0].id
+      pt = @tournament.player_tournaments.find(params[:p_id])
+      pt.player.destroy if pt.player.player_tournaments.size == 1
+      pt.destroy
+      redirect_to @tournament, notice: 'Player removed'
+    else
+      redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
+    end
+  end
+
 
   # POST /tournaments
   # POST /tournaments.json
@@ -90,7 +102,12 @@ class TournamentsController < ApplicationController
     end
   end
 
-   def end_prelims
+  def re_generate_round
+    redirect_to @tournament, notice: "Round #{@tournament.current_round} Matches Re-Generated"
+    @tournament.re_generate
+  end
+
+  def end_prelims
     @tournament.finished = true
     @tournament.save
     redirect_to @tournament

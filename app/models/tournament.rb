@@ -13,6 +13,16 @@ class Tournament < ActiveRecord::Base
     self.save
   end
 
+  def re_generate
+    self.matches.sort_by{|m| m.id }.last.player_1.update(had_bye: false) #bad
+    self.matches.where(round: self.current_round).destroy_all
+    round_matches
+  end
+
+  def round_started
+    self.matches.where(round: current_round).where("game_1 IS NOT null").length > 0 
+  end
+
   def assess_rounds
     number_of_players = self.players.all.size
 
