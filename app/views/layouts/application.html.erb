@@ -24,7 +24,7 @@
               <% if user_signed_in? %>
                 <%= link_to('Logout', destroy_user_session_path,{:method => :delete, :style => 'color:#CCC;'}) %>        
               <% else %>
-                <%= link_to('Login', new_user_session_path, {:style => 'color:#CCC;'})  %>  
+                <%= link_to('Login / Signup', new_user_session_path, {:style => 'color:#CCC;'})  %>  
               <% end %>
           </form>
         </div><!--/.navbar-collapse -->
