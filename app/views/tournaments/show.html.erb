@@ -28,7 +28,7 @@
         <% if @tournament.players.size < 8 && !@tournament.finished %>
           The tournament must have at least 8 players.
         <% elsif !@tournament.round_started && @tournament.current_round != nil %>
-          <%= button_to 'Re-Generate Round', action: "re_generate_round" %>
+          <%= button_to 'Re-Generate Round', action: "re_generate_round" %> <em>(use if results from previous round have been updated)</em>
         <% elsif !@tournament.round_complete %>
           The next round can be generated once all matches are resolved
         <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
