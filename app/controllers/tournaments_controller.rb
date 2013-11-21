@@ -22,16 +22,16 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments/1/edit
   def edit
-    if current_user && current_user.id == @tournament.user.id
+    if current_user && current_user.id == @tournament.users[0].id
       render :edit
     else
-      redirect_to @tournament
+      redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
     end
   end
 
   def add_players
    @tournament.find_or_create_player(tournament_params["name"])
-   redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
+   redirect_to @tournament
   end
 
   # POST /tournaments
