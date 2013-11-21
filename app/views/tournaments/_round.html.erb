@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <br>
-        <% @tournament.matches.select{ |m| m.round == round_n + 1 }.each do |match| %>
+        <% @tournament.matches.select{ |m| m.round == round_n + 1 }.sort_by{ |m| m.id}.each do |match| %>
           <tr style="<%= "background-color: grey;" if match.finished? %>">
           <%= form_for match, url:  {action: "update_results"} do |f| %>
             <td><%= match.player_1.player.name %></td>

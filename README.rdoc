@@ -1,6 +1,6 @@
 Wishlist!
 
--deploy and postgress
+
 -re-generate round
 -Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
 -remove players from playerlist before tournament begins
