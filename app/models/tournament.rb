@@ -5,6 +5,12 @@ class Tournament < ActiveRecord::Base
   has_many :user_tournaments
   has_many :users, through: :user_tournaments
 
+
+  def slugify
+    self.slug = self.name.downcase.gsub(" ","-")
+  end
+
+
   def generate
     self.current_round ||= 0
     self.current_round += 1

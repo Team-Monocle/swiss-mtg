@@ -4,7 +4,7 @@
       <h1 class="titleything">Tournaments</h1>
             
             <% @tournaments.each do |tournament| %>
-             <h3> <%= link_to tournament.name, tournament %> </h3>
+             <h3> <%= link_to tournament.name, tournament_path(tournament.slug) %> </h3>
             <% end %>
             
           <br>

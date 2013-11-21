@@ -25,24 +25,25 @@ class TournamentsController < ApplicationController
     if current_user && current_user.id == @tournament.users[0].id
       render :edit
     else
-      redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
+      redirect_to tournament_path(@tournament.slug), notice: 'You do not have the proper permissions, you terrorist.'
     end
   end
 
   def add_players
    @tournament.find_or_create_player(tournament_params["name"])
-   redirect_to @tournament
+   redirect_to tournament_path(@tournament.slug)
   end
 
   # POST /tournaments
   # POST /tournaments.json
   def create
     @tournament = Tournament.new(tournament_params)
+    @tournament.slugify
     
     respond_to do |format|
       if @tournament.save
         UserTournament.create(tournament_id: @tournament.id, user_id: current_user.id)
-        format.html { redirect_to @tournament, notice: 'Tournament was successfully created.' }
+        format.html { redirect_to tournament_path(@tournament.slug), notice: 'Tournament was successfully created.' }
         format.json { render action: 'show', status: :created, location: @tournament }
       else
         format.html { render action: 'new' }
@@ -54,7 +55,7 @@ class TournamentsController < ApplicationController
   def update_results
     match = Match.find(match_params[:match_id])
     match.update(game_1: match_params[:game_1], game_2: match_params[:game_2], game_3: match_params[:game_3])
-    redirect_to @tournament
+    redirect_to tournament_path(@tournament.slug)
   end
 
   # PATCH/PUT /tournaments/1
@@ -62,7 +63,7 @@ class TournamentsController < ApplicationController
   def update
     respond_to do |format|
       if @tournament.update(tournament_params)
-        format.html { redirect_to @tournament, notice: 'Tournament was successfully updated.' }
+        format.html { redirect_to tournament_path(@tournament.slug), notice: 'Tournament was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -74,32 +75,36 @@ class TournamentsController < ApplicationController
   # DELETE /tournaments/1
   # DELETE /tournaments/1.json
   def destroy
-    @tournament.destroy
-    respond_to do |format|
-      format.html { redirect_to tournaments_url }
-      format.json { head :no_content }
+    if current_user && current_user.id == @tournament.users[0].id
+      @tournament.destroy
+      respond_to do |format|
+        format.html { redirect_to tournaments_url }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to tournament_path(@tournament.slug), notice: 'You do not have the proper permissions, you terrorist.'
     end
   end
 
   def generate_round
     if @tournament.round_complete
-      redirect_to @tournament, notice: "Round #{@tournament.current_round} Matches Generated"
+      redirect_to tournament_path(@tournament.slug), notice: "Round #{@tournament.current_round} Matches Generated"
       @tournament.generate 
     else
-      redirect_to @tournament, notice: "New round pairings cannot be generated until the current round has been completed"
+      redirect_to tournament_path(@tournament.slug), notice: "New round pairings cannot be generated until the current round has been completed"
     end
   end
 
    def end_prelims
     @tournament.finished = true
     @tournament.save
-    redirect_to @tournament
+    redirect_to tournament_path(@tournament.slug)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tournament
-      @tournament = Tournament.find(params[:id])
+      @tournament = Tournament.find_by(slug: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
