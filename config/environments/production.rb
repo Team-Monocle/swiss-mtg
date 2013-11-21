@@ -1,12 +1,12 @@
 SwissMtg::Application.configure do
 
   # raise "FORGOT TO SET default_url_options IN CONFIG/ENVIRONMENTS/PRODUCTION"
-  config.action_mailer.default_url_options = { :host => 'http://tourn-io.herokuapp.com/' }
+  config.action_mailer.default_url_options = { :host => 'tourn-io.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       :address              => 'smtp.gmail.com',
       :port                 => 587,
-      :domain               => 'gmail.com',
+      :domain               => 'heroku.com',
       :user_name            => 'team.monocle.tournio@gmail.com',
       :password             => 'pinkyout',
       :authentication       => 'login',
