@@ -1,7 +1,7 @@
 <h2><%= @tournament.name %></h2> 
 <p >
-  <strong>Format:</strong>
-  <%= @tournament.format if @tournament.format %> | 
+  <!-- <strong>Format:</strong> -->
+  <!-- <%#= @tournament.format if @tournament.format %> |  -->
   <strong>Date:</strong>
   <%= @tournament.date if @tournament.date %> | 
   <strong>Location:</strong>
@@ -56,8 +56,14 @@
           <ol style="text-align: left;">
             <% @tournament.order_players.each do |p| %>
               <li>
-                <strong><%= p.player.name %></strong><br>
-                <%= p.match_points %> points | <%= p.record %> | <%= (p.opponents_match_avg * 100).round(2) %>%
+                <strong><%= p.player.name %></strong>
+                <% if @tournament.current_round != nil %>
+                  <br>
+                  <%= p.match_points %> points | <%= p.record %> | <%= (p.opponents_match_avg * 100).round(2) %>%
+                <% else %>
+                  <!-- link_to "Profile", :controller => "profiles", :action => "show", :id => @profile -->
+                  <%= link_to 'x', :controller => "tournaments", action: "remove_player", :p_id => p.id %>
+                <% end %>
               </li>
             <% end %>
           </ol>
