@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :add_players, :update_results, :end_prelims]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :re_generate_round, :add_players, :update_results, :end_prelims]
 
   skip_before_filter :authenticate_user!, only: [:index, :show]
 
@@ -90,7 +90,12 @@ class TournamentsController < ApplicationController
     end
   end
 
-   def end_prelims
+  def re_generate_round
+    redirect_to @tournament, notice: "Round #{@tournament.current_round} Matches Re-Generated"
+    @tournament.re_generate
+  end
+
+  def end_prelims
     @tournament.finished = true
     @tournament.save
     redirect_to @tournament

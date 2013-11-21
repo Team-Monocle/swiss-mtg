@@ -8,6 +8,8 @@ SwissMtg::Application.routes.draw do
 
   post '/tournaments/:id/generate_round', :to => 'tournaments#generate_round'
 
+  post '/tournaments/:id/re_generate_round', :to => 'tournaments#re_generate_round'
+
   post '/tournaments/:id/end_prelims', :to => 'tournaments#end_prelims'
 
   resources :players

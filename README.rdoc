@@ -1,10 +1,11 @@
 Wishlist!
 
 
--re-generate round
--Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
 -remove players from playerlist before tournament begins
 
+-Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
+
+-table numbers
 
 -Generate finals brackets or end tournament and display top x
 
@@ -19,3 +20,4 @@ Wishlist!
 
 
 -users submit results 
+-slugs, more restful routes
