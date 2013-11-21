@@ -3,7 +3,7 @@ Wishlist!
 
 -Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
 
--table numbers
+-table numbers (physical -- at the actual shop)
 
 -Generate finals brackets or end tournament and display top x
 
