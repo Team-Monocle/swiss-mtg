@@ -34,7 +34,7 @@
               <td>
                 <%= f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_1))%>
                 <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_2))%>
-                <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_3)) %>
+                <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_3))%>
                 <%= f.hidden_field :match_id, :value => match.id %>
               </td>
               <td><%= match.player_2.player.name %></td>

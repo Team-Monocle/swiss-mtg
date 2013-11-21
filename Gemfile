@@ -40,6 +40,8 @@ gem 'pry'
 
 gem "devise"
 
+gem 'foreman'
+
 # gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/bootstrap-rails'
 
 # Use unicorn as the app server

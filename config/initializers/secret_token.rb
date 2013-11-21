@@ -1,1 +1,4 @@
-SwissMtg::Application.config.secret_key_base = ENV["SECRET_TOKEN"]
+SwissMtg::Application.config.secret_key_base = Soup
+
+
+# ENV["SECRET_TOKEN"]
