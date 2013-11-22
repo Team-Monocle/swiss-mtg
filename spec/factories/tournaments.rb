@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :tournament do
-    name "MyString"
-    matches nil
+    name "Test Tournament"
+    location "Manley's Apartment/No Windows/No Rules"
   end
 end

@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :player_tournament do
+    player
   end
 end

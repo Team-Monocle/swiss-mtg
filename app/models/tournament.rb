@@ -50,7 +50,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def round_matches
-    if current_round == 1 #i just added this
+    if current_round == 1
       player_list = self.player_tournaments.to_a.shuffle
     else
       player_list = already_bye?
@@ -76,7 +76,6 @@ class Tournament < ActiveRecord::Base
   end
 
   def order_players
-    # binding.pry
     self.player_tournaments.includes(:finished_matches_as_1, :finished_matches_as_2).sort_by{|p| [-p.match_points, -p.opponents_match_avg, -p.game_win_percent, -p.opponents_game_avg] }
   end
 
