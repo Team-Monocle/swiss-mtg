@@ -19,14 +19,18 @@
       <table class="table formatted_table">
         <thead>
           <tr>
+            <th class="table_number">Table</th>
             <th class="centerizer">Player 1</th>
             <th class="results-col">Match Results</th>
             <th class="centerizer">Player 2</th>
           </tr>
         </thead>
         <br>
+        <% i = 1 %>
          <% @tournament.matches.select{ |m| m.round == round_n + 1 }.sort_by{ |m| m.id}.each do |match| %>
           <tr style="<%= "background-color: grey;" if match.finished? %>">
+            <td><%= i %></td>
+            <% i += 1 %>
             <td><%= match.player_1.player.name %></td>
             <% if match.player_2 != nil %>
               <td>
