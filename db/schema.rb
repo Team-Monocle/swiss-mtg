@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120162743) do
+ActiveRecord::Schema.define(version: 20131122153432) do
 
   create_table "matches", force: true do |t|
     t.integer  "tournament_id"
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(version: 20131120162743) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "player_tournaments", ["player_id"], name: "index_player_tournaments_on_player_id"
+  add_index "player_tournaments", ["tournament_id"], name: "index_player_tournaments_on_tournament_id"
 
   create_table "players", force: true do |t|
     t.string   "name"
@@ -60,6 +63,9 @@ ActiveRecord::Schema.define(version: 20131120162743) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_tournaments", ["tournament_id"], name: "index_user_tournaments_on_tournament_id"
+  add_index "user_tournaments", ["user_id"], name: "index_user_tournaments_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
