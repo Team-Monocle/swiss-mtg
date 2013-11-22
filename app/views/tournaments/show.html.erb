@@ -24,18 +24,18 @@
 
 <p id="notice" ><%= notice %></p>
 
-<div>
+<div id="buttonHouse">
   <% if current_user && current_user.id == @tournament.users[0].id%>
     <% if @tournament.players.size < 8 && !@tournament.finished %>
-      The tournament must have at least 8 players.
+      <p>The tournament must have at least 8 players.</p>
     <% elsif !@tournament.round_started && @tournament.current_round != nil %>
-      <%= button_to 'Re-Generate Round', {action: "re_generate_round"}, {class: 'btn btn-danger btn-md'} %> <em>(use if results from previous round have been updated)</em>
+      <p><%= button_to 'Re-Generate Round', {action: "re_generate_round"}, {class: 'btn btn-danger btn-md'} %> <em>(use if results from previous round have been updated)</em></p>
     <% elsif !@tournament.round_complete %>
-      The next round can be generated once all matches are resolved
+      <p>The next round can be generated once all matches are resolved</p>
     <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
-      <%= button_to @tournament.end_message , action: "end_prelims" %>
+      <p><%= button_to @tournament.end_message , action: "end_prelims" %></p>
     <% elsif !@tournament.finished %>
-      <%= button_to 'Generate Next Round', {action: "generate_round"}, {class: 'btn btn-danger btn-md'} %>
+      <p><%= button_to 'Generate Next Round', {action: "generate_round"}, {class: 'btn btn-danger btn-md'} %></p>
     <% end %>
   <%end%>
 </div><br>
