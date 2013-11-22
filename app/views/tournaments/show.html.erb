@@ -70,7 +70,7 @@
 
       </div>
 
-        <div class="col-md-8" id="pairing_sidebar" >
+        <div class="col-md-8" id="pairing_sidebar" style="overflow-x: hidden;">
           <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id  %>
             <%= render 'round' %>
           <% elsif @tournament.current_round %>
