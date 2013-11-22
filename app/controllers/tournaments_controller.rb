@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :re_generate_round, :add_players, :remove_player, :update_results, :end_prelims]
+  before_action :set_tournament, only: [:show, :edit, :update, :destroy, :generate_round, :re_generate_round, :add_players, :remove_player, :update_results, :end_prelims, :add_player_list]
 
   skip_before_filter :authenticate_user!, only: [:index, :show]
 
@@ -29,8 +29,24 @@ class TournamentsController < ApplicationController
   end
 
   def add_players
-   @tournament.find_or_create_player(tournament_params["name"])
-   redirect_to @tournament
+    if current_user && current_user.id == @tournament.users[0].id
+      @tournament.find_or_create_player(tournament_params["name"])
+      redirect_to @tournament
+    else
+      redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
+    end
+  end
+
+  def add_player_list
+    if current_user && current_user.id == @tournament.users[0].id
+      names = tournament_params["name"].split(',').map(&:strip)
+      names.each do |name|
+        @tournament.find_or_create_player(name)
+      end
+      redirect_to @tournament
+    else
+      redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
+    end
   end
 
   def remove_player

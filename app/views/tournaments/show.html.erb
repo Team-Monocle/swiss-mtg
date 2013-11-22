@@ -44,6 +44,16 @@
         <%= f.text_field :name, :value => "", placeholder: "Name" %>
         <%= f.submit "Add Players" %>
         <% end %>
+        -or-
+        <%= form_for @tournament, :url => {:action => 'add_player_list'} do |f| %>
+        <%= f.text_area :name, cols: 40, rows: 10, :value => "", placeholder: "Name" %>
+        <em> (comma separate names) </em>
+        <br>
+        <br>
+        <%= f.submit "Add Player List" %>
+        <br>
+        <br>
+        <% end %>
       <% end %>
 
       <h4 id="standings_style"> Standings </h4>
