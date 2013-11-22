@@ -12,7 +12,6 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1
   # GET /tournaments/1.json
   def show
-    @players = Player.all
   end
 
   # GET /tournaments/new
