@@ -4,7 +4,7 @@ class CreateMatches < ActiveRecord::Migration
       t.references :tournament, index: true
       t.integer :player_1_id, index: true
       t.integer :player_2_id, index: true
-      t.integer :round
+      t.integer :round, index: true
       t.integer :game_1  
       t.integer :game_2
       t.integer :game_3

@@ -4,7 +4,6 @@ class CreateUserTournaments < ActiveRecord::Migration
       t.integer :user_id
       t.integer :tournament_id
   
-
       t.timestamps
     end
   end
