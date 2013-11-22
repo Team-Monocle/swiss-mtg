@@ -16,13 +16,12 @@
     <% if (round_n + 1) > @tournament.current_round %>
       <h3>Round Not Started</h3>
     <% else %>
-      <table style="text-align: center;">
+      <table class="table formatted_table">
         <thead>
           <tr>
-            <th style="text-align: center;">Player 1</th>
-            <th style="text-align: center;">Match Results</th>
-            <th style="text-align: center;">Player 2</th>
-            <th></th>
+            <th class="centerizer">Player 1</th>
+            <th class="results-col">Match Results</th>
+            <th class="centerizer">Player 2</th>
           </tr>
         </thead>
         <br>
@@ -64,14 +63,9 @@
 
               </td>
               <td><%= match.player_2.player.name %></td>
-              
             <% else %>
-              <td>
-                
-              </td>
-
-                <td>BYE</td>
-                <td></td>
+              <td></td>
+              <td>BYE</td>
             <% end %>
           </tr>
         <% end %>

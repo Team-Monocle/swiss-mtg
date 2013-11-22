@@ -9,26 +9,29 @@
 </ul>
 
 
-
 <div class="tab-content">
   <% @tournament.number_of_rounds.times do |round_n| %>
   <div class="tab-pane" id="round-<%= round_n + 1 %>">
     <% if (round_n + 1) > @tournament.current_round %>
       <h3>Round Not Started</h3>
     <% else %>
-      <table style="text-align: center;">
+      <table class="table formatted_table">
         <thead>
           <tr>
-            <th style="text-align: center;">Player 1</th>
-            <th style="text-align: center;">Match Results</th>
-            <th style="text-align: center;">Player 2</th>
-            <th></th>
+            <th class="table_number">Table</th>
+            <th class="centerizer">Player 1</th>
+            <th class="results-col">Match Results</th>
+            <th class="centerizer">Player 2</th>
+            <!-- <th></th> -->
           </tr>
         </thead>
         <br>
+        <% i = 1 %>
         <% @tournament.matches.select{ |m| m.round == round_n + 1 }.sort_by{ |m| m.id}.each do |match| %>
           <tr style="<%= "background-color: grey;" if match.finished? %>">
           <%= form_for match, url:  {action: "update_results"} do |f| %>
+            <td><%= i %></td>
+            <% i += 1 %>
             <td><%= match.player_1.player.name %></td>
             <% if match.player_2 != nil %>
               <td>
