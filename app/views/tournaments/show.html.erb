@@ -23,25 +23,27 @@
 </div>
 
 <p id="notice" ><%= notice %></p>
+
+
 <div>
   <% if current_user && current_user.id == @tournament.users[0].id%>
     <% if @tournament.players.size < 8 && !@tournament.finished %>
       The tournament must have at least 8 players.
     <% elsif !@tournament.round_started && @tournament.current_round != nil %>
-      <%= button_to 'Re-Generate Round', action: "re_generate_round" %> <em>(use if results from previous round have been updated)</em>
+      <%= button_to 'Re-Generate Round', {action: "re_generate_round"}, {class: 'btn btn-danger btn-md'} %> <em>(use if results from previous round have been updated)</em>
     <% elsif !@tournament.round_complete %>
       The next round can be generated once all matches are resolved
     <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
       <%= button_to @tournament.end_message , action: "end_prelims" %>
     <% elsif !@tournament.finished %>
-      <%= button_to 'Generate Next Round', action: "generate_round" %>
+      <%= button_to 'Generate Next Round', {action: "generate_round"}, {class: 'btn btn-danger btn-md'} %>
     <% end %>
   <%end%>
 </div>
 
 <br>
 
-<div class="col-md-4 player_list_overflow colorize-list">
+<div class="col-md-4 player_list_overflow">
   <% if current_user && !@tournament.current_round && current_user.id == @tournament.users[0].id%>
     <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
     <%= f.text_field :name, :value => "", placeholder: "Name" %>
