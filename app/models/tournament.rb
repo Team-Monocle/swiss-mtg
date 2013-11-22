@@ -86,7 +86,8 @@ class Tournament < ActiveRecord::Base
   end
 
   def end_message
-    self.format == "Swiss Pairings, Without Finals" ? "End Tournament" : "Generate Finals"
+    #self.format == "Swiss Pairings, Without Finals" ? "End Tournament" : "Generate Finals"
+    "End Tournament"
   end
 
   def round_complete

@@ -53,8 +53,7 @@
       <% end %>
 
       <% if @tournament.current_round != nil %>
-      <h4 id="standings_style"> Standings </h4>
-
+      <h4 id="standings_style"> 
       <ol id="player_sidebar">
         <% @tournament.order_players.each do |p| %>
           <li>
@@ -75,7 +74,7 @@
       <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id  %>
         <%= render 'round' %>
       <% elsif @tournament.current_round %>
-        <%= render 'public_round'%>s
+        <%= render 'public_round'%>
       <% elsif @tournament.current_round == nil %>
         <%= render 'player_list' %>
       <% end %>

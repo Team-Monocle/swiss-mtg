@@ -4,9 +4,10 @@
       <h1 class="titleything">Tournaments</h1>
             <% if current_user %>
              <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
+             <br> 
             <% end %>
-            
-             <br>  
+
+
 
             <% @tournaments.each do |tournament| %>
              <h3> <%= link_to tournament.name, tournament %> </h3>
