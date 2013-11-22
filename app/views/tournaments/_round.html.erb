@@ -15,28 +15,28 @@
     <% if (round_n + 1) > @tournament.current_round %>
       <h3>Round Not Started</h3>
     <% else %>
-      <table class="table"  style="text-align: center; width: 100%;">
+      <table class="table"  style="table-layout: fixed; text-align: center; width: 100%;">
         <thead>
           <tr>
             <th style="text-align: center;">Player 1</th>
             <th style="text-align: center;">Match Results</th>
             <th style="text-align: center;">Player 2</th>
-            <th></th>
+            <!-- <th></th> -->
           </tr>
         </thead>
         <br>
         <% @tournament.matches.select{ |m| m.round == round_n + 1 }.sort_by{ |m| m.id}.each do |match| %>
           <tr style="<%= "background-color: grey;" if match.finished? %>">
           <%= form_for match, url:  {action: "update_results"} do |f| %>
-            <td style="width: 25%"><%= match.player_1.player.name %></td>
+            <td><%= match.player_1.player.name %></td>
             <% if match.player_2 != nil %>
-              <td style="width: 180px">
+              <td>
                 <%= f.select(:game_1, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_1))%>
                 <%= f.select(:game_2, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_2))%>
                 <%= f.select(:game_3, options_for_select([["-", nil],["P 1", match.player_1_id], ["P 2", match.player_2_id], ["D", 0]], match.game_3))%>
                 <%= f.hidden_field :match_id, :value => match.id %>
               </td>
-              <td style="width: 25%"><%= match.player_2.player.name %></td>
+              <td><%= match.player_2.player.name %></td>
               <% if !@tournament.finished %>
                 <td><%= f.submit "Update Results" %></td>
               <% end %>

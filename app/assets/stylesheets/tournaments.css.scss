@@ -1,35 +1,17 @@
-.pairings_container {
-  float:left;
-  width: 100%;
-  position:relative;
-  right:30%;
-}
-
-.player_list_container {
-  float:left;
-  width:100%;
-  position:relative;
-  right:40%;
-}
-
-.col-md-4 {
-  float:left;
-  position:relative;
-  left:76%;
+.player_list_overflow {
   overflow:auto;
-
-
-}
-
-.col-md-8 {
-  float:left;
-  position: relative;
-  left:80%;
-  overflow:hidden;
 }
 
 #standings_style {
   text-align: center;
+  background-color: black;
+  color: white;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+#player_sidebar {
+  text-align: left;
 }
 
 .titleything {
