@@ -34,28 +34,25 @@
     <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
       <%= button_to @tournament.end_message , action: "end_prelims" %>
     <% elsif !@tournament.finished %>
-      <%= button_to 'Generate Next Round', action: "generate_round" %>
+      <%= button_to "#{@tournament.current_round ? 'Generate Next Round' : 'Confirm Playerlist and Start Tournament'}", action: "generate_round" %>
     <% end %>
   <%end%>
 </div><br>
     <div class="col-md-4 player_list_overflow">
       <% if current_user && !@tournament.current_round && current_user.id == @tournament.users[0].id%>
-        <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
-        <%= f.text_field :name, :value => "", placeholder: "Name" %>
-        <%= f.submit "Add Players" %>
-        <% end %>
-        -or-
         <%= form_for @tournament, :url => {:action => 'add_player_list'} do |f| %>
-        <%= f.text_area :name, cols: 40, rows: 10, :value => "", placeholder: "Name" %>
+        <%= f.text_area :name, cols: 40, rows: 10, :value => "", placeholder: "Names" %>
+        <br>
         <em> (comma separate names) </em>
         <br>
         <br>
-        <%= f.submit "Add Player List" %>
+        <%= f.submit "Add Player(s)" %>
         <br>
         <br>
         <% end %>
       <% end %>
 
+      <% if @tournament.current_round != nil %>
       <h4 id="standings_style"> Standings </h4>
 
       <ol id="player_sidebar">
@@ -71,13 +68,16 @@
           </li>
         <% end %>
       </ol>
+      <% end %>
     </div>
 
     <div class="col-md-8" id="pairing_sidebar" style="overflow-x: hidden;">
       <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id  %>
         <%= render 'round' %>
       <% elsif @tournament.current_round %>
-        <%= render 'public_round'%>
+        <%= render 'public_round'%>s
+      <% elsif @tournament.current_round == nil %>
+        <%= render 'player_list' %>
       <% end %>
     </div>
   </div>

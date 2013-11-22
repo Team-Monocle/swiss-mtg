@@ -28,15 +28,6 @@ class TournamentsController < ApplicationController
     end
   end
 
-  def add_players
-    if current_user && current_user.id == @tournament.users[0].id
-      @tournament.find_or_create_player(tournament_params["name"])
-      redirect_to @tournament
-    else
-      redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
-    end
-  end
-
   def add_player_list
     if current_user && current_user.id == @tournament.users[0].id
       names = tournament_params["name"].split(',').map(&:strip)

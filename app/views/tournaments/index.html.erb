@@ -2,15 +2,18 @@
   <div class="row">
     <div class="col-md-12">
       <h1 class="titleything">Tournaments</h1>
+            <% if current_user %>
+             <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
+            <% end %>
             
+             <br>  
+
             <% @tournaments.each do |tournament| %>
              <h3> <%= link_to tournament.name, tournament %> </h3>
             <% end %>
             
-          <br>
-          <% if current_user %>
-            <strong><%= link_to 'New Tournament', new_tournament_path %></strong>
-          <% end %>
+         
+          
     </div>
   </div>
 
