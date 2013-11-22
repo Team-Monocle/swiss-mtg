@@ -21,6 +21,10 @@
   width: 180px;
 }
 
+.colorize-list{
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#f5f5f5), to(#e8e8e8));
+}
+
 #standings_style {
   text-align: center;
   /*background-color: grey;*/

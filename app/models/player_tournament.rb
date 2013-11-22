@@ -45,7 +45,7 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if m.game_2 == self.id 
       total += 1 if m.game_3 == self.id
       total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
-      total == 2
+      total == 2 && m.round < self.tournament.current_round
     end
     wins.length
   end
@@ -57,13 +57,13 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if (m.game_2 != self.id) && (m.game_2 != nil) && (m.game_2 != 0)
       total += 1 if (m.game_3 != self.id) && (m.game_3 != nil) && (m.game_3 != 0)
       total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
-      total == 2
+      total == 2 && m.round < self.tournament.current_round
     end
     losses.length
   end
 
   def match_draws
-    self.finished_matches.length - match_wins - match_losses
+    self.finished_matches.select{|m| m.round < self.tournament.current_round }.size - match_wins - match_losses
   end
 
   def games
@@ -98,12 +98,12 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def matches_played
-    self.finished_matches.select{|m| m.player_2_id != nil}
+    self.finished_matches.select{|m| m.player_2_id != nil && m.round < self.tournament.current_round }
   end
 
   def opponents_game_avg
-    return 0 if self.matches_played.size == 0
     played = self.matches_played
+    return 0 if played.size == 0
     points = played.collect do |m|
       if m.player_1_id != self.id
         m.player_1.game_win_percent
@@ -117,15 +117,16 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def opponents_match_avg
-    return 0 if self.matches_played.size == 0
-    points = self.matches_played.collect do |m|
+    played = self.matches_played
+    return 0 if played.size == 0
+    points = played.collect do |m|
       if m.player_1_id != self.id
         m.player_1.match_win_percent
       else
         m.player_2.match_win_percent
       end
     end
-    points.inject{|total, n| total += n } / (self.matches_played.size * 1.0)
+    points.inject{|total, n| total += n } / (played.size * 1.0)
   end
 
 
