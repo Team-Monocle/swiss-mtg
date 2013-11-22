@@ -2,10 +2,29 @@
   overflow:auto;
 }
 
+.table_number {
+  text-align: center;
+  width: 80px;
+}
+
+.formatted_table {
+  table-layout: fixed;
+  text-align: center;
+}
+
+.centerizer {
+  text-align: center;
+}
+
+.results-col {
+  text-align: center;
+  width: 180px;
+}
+
 #standings_style {
   text-align: center;
-  background-color: black;
-  color: white;
+  /*background-color: grey;*/
+  /*color: white;*/
   margin: 0 0 0 0;
   padding: 0 0 0 0;
 }

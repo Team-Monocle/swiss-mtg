@@ -38,11 +38,6 @@
     <% end %>
   <%end%>
 </div><br>
-  <div class="row">
-    <div class="col-md-4">
-      <h4 id="standings_style"> Standings </h4>
-    </div>
-  </div>
     <div class="col-md-4 player_list_overflow">
       <% if current_user && !@tournament.current_round && current_user.id == @tournament.users[0].id%>
         <%= form_for @tournament, :url => {:action => 'add_players'} do |f| %>
@@ -50,6 +45,8 @@
         <%= f.submit "Add Players" %>
         <% end %>
       <% end %>
+
+      <h4 id="standings_style"> Standings </h4>
 
       <ol id="player_sidebar">
         <% @tournament.order_players.each do |p| %>
