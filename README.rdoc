@@ -1,9 +1,7 @@
 Wishlist!
 
 
--Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
-
--table numbers (physical -- at the actual shop)
+-?Make Sure That Players Don't Get Matched Up Against The Same Person Twice in Standard Rounds
 
 -Generate finals brackets or end tournament and display top x
 
