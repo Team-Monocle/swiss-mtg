@@ -27,8 +27,8 @@ $(function() {
     };
   });
 
-  $("#bye_button").click(function(){
-    var $form = $($(".bye_form")[0]);
+  $(".bye_button").last().click(function(){
+    var $form = $($(".bye_form").last());
 
     var valuesToSubmit = $($form).serialize();
 

@@ -48,7 +48,7 @@
                   <%= f.hidden_field :game_2, :value => match.player_1_id %>
                   <%= f.hidden_field :match_id, :value => match.id %>
                 <% end %>
-                <button class="btn btn-danger btn-xs" id="bye_button"> Confirm Bye </button>
+                <button class="btn btn-danger btn-xs bye_button"> Confirm Bye </button>
               </td>
 
               <% if !@tournament.finished %>
