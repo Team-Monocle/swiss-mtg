@@ -91,7 +91,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def round_complete
-    completed = self.matches.select {|m| m.game_1 != nil }
+    completed = self.matches.select {|m| m.game_1 && m.game_1 >= 0 }
     completed.size == self.matches.size
   end
 

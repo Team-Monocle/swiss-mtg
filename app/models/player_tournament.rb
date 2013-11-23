@@ -4,8 +4,8 @@ class PlayerTournament < ActiveRecord::Base
   has_many :matches_as_1, foreign_key: "player_1_id",class_name: "Match"
   has_many :matches_as_2, foreign_key: "player_2_id",class_name: "Match"
 
-  has_many :finished_matches_as_1, foreign_key: "player_1_id",class_name: "Match", :conditions => ['game_1 IS NOT NULL']
-  has_many :finished_matches_as_2, foreign_key: "player_2_id",class_name: "Match", :conditions => ['game_1 IS NOT NULL']
+  has_many :finished_matches_as_1, foreign_key: "player_1_id",class_name: "Match", :conditions => ['game_1 IS NOT null AND game_1 >= 0']
+  has_many :finished_matches_as_2, foreign_key: "player_2_id",class_name: "Match", :conditions => ['game_1 IS NOT null AND game_1 >= 0']
 
 
   def matches
@@ -45,7 +45,7 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if m.game_2 == self.id 
       total += 1 if m.game_3 == self.id
       total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
-      total == 2
+      total == 2 && m.round < self.tournament.current_round
     end
     wins.length
   end
@@ -53,25 +53,25 @@ class PlayerTournament < ActiveRecord::Base
   def match_losses
     losses = self.matches.select do |m|
       total = 0
-      total += 1 if (m.game_1 != self.id) && (m.game_1 != nil) && (m.game_1 != 0) 
-      total += 1 if (m.game_2 != self.id) && (m.game_2 != nil) && (m.game_2 != 0)
-      total += 1 if (m.game_3 != self.id) && (m.game_3 != nil) && (m.game_3 != 0)
+      total += 1 if m.game_1 && (m.game_1 != self.id) && (m.game_1 > 0 ) && (m.game_1 != 0) 
+      total += 1 if m.game_2 && (m.game_2 != self.id) && (m.game_2 > 0 ) && (m.game_2 != 0)
+      total += 1 if m.game_3 && (m.game_3 != self.id) && (m.game_3 > 0 ) && (m.game_3 != 0)
       total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
-      total == 2
+      total == 2 && m.round < self.tournament.current_round
     end
     losses.length
   end
 
   def match_draws
-    self.finished_matches.length - match_wins - match_losses
+    self.finished_matches.select{|m| m.round < self.tournament.current_round }.size - match_wins - match_losses
   end
 
   def games
     total = 0
     self.matches.each do |m|
-      total += 1 if m.game_1 != nil
-      total += 1 if m.game_2 != nil
-      total += 1 if m.game_3 != nil
+      total += 1 if m.game_1 && m.game_1 >= 0 
+      total += 1 if m.game_2 && m.game_2 >= 0 
+      total += 1 if m.game_3 && m.game_3 >= 0 
     end
     total
   end
@@ -98,12 +98,12 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def matches_played
-    self.finished_matches.select{|m| m.player_2_id != nil}
+    self.finished_matches.select{|m| m.player_2_id && m.player_2_id >= 0 }
   end
 
   def opponents_game_avg
-    return 0 if self.matches_played.size == 0
     played = self.matches_played
+    return 0 if played.size == 0
     points = played.collect do |m|
       if m.player_1_id != self.id
         m.player_1.game_win_percent
@@ -117,15 +117,16 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def opponents_match_avg
-    return 0 if self.matches_played.size == 0
-    points = self.matches_played.collect do |m|
+    played = self.matches_played
+    return 0 if played.size == 0
+    points = played.collect do |m|
       if m.player_1_id != self.id
         m.player_1.match_win_percent
       else
         m.player_2.match_win_percent
       end
     end
-    points.inject{|total, n| total += n } / (self.matches_played.size * 1.0)
+    points.inject{|total, n| total += n } / (played.size * 1.0)
   end
 
 

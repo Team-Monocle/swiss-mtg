@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %><br><br>
+    <%= f.text_field :name, required: true%><br><br>
     <!-- <%#= f.label :format %><br> -->
     <!-- <%#= f.select(:format, options_for_select([["Swiss Pairings, With Finals", "Swiss Pairings, With Finals"], ["Swiss Pairings, Without Finals", "Swiss Pairings, Without Finals"]])) %><br><br> -->
     <%= f.label :location %><br>
@@ -24,6 +24,6 @@
     <%= f.text_area :details, cols: 50, rows: 10 %><br><br>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit",class: "btn btn-danger btn-md"%>
   </div>
 <% end %>

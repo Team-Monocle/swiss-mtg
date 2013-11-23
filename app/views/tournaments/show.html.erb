@@ -23,66 +23,69 @@
 </div>
 
 <p id="notice" ><%= notice %></p>
-<div >
+
+<div id="buttonHouse">
   <% if current_user && current_user.id == @tournament.users[0].id%>
     <% if @tournament.players.size < 8 && !@tournament.finished %>
-      The tournament must have at least 8 players.
+      <p>The tournament must have at least 8 players.</p>
     <% elsif !@tournament.round_started && @tournament.current_round != nil %>
-      <%= button_to 'Re-Generate Round', action: "re_generate_round" %> <em>(use if results from previous round have been updated)</em>
+      <p><%= button_to 'Re-Generate Round', {action: "re_generate_round"}, {class: 'btn btn-danger btn-md'} %> <em>(use if results from previous round have been updated)</em></p>
     <% elsif !@tournament.round_complete %>
-      The next round can be generated once all matches are resolved
+      <p>The next round can be generated once all matches are resolved</p>
     <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
-      <%= button_to @tournament.end_message , action: "end_prelims" %>
+      <p><%= button_to @tournament.end_message , action: "end_prelims" %></p>
     <% elsif !@tournament.finished %>
-      <%= button_to "#{@tournament.current_round ? 'Generate Next Round' : 'Confirm Playerlist and Start Tournament'}", action: "generate_round" %>
+      <%= button_to "#{@tournament.current_round ? 'Generate Next Round' : 'Confirm Playerlist and Start Tournament'}", {action: "generate_round"}, {class: "btn btn-danger btn-md"} %>
     <% end %>
   <%end%>
-</div><br>
-    <div class="col-md-4 player_list_overflow">
-      <% if current_user && !@tournament.current_round && current_user.id == @tournament.users[0].id%>
-        <%= form_for @tournament, :url => {:action => 'add_player_list'} do |f| %>
-        <%= f.text_area :name, cols: 40, rows: 10, :value => "", placeholder: "Names" %>
-        <br>
-        <em> (comma separate names) </em>
-        <br>
-        <br>
-        <%= f.submit "Add Player(s)" %>
-        <br>
-        <br>
-        <% end %>
-      <% end %>
+</div>
 
-      <% if @tournament.current_round != nil %>
-      <h4 id="standings_style"> 
-      <ol id="player_sidebar">
-        <% @tournament.order_players.each do |p| %>
-          <li>
-            <strong><%= p.player.name %></strong>
-            <% if @tournament.current_round != nil %>
-              <br>
-              <%= p.match_points %> points | <%= p.record %> | <%= (p.opponents_match_avg * 100).round(2) %>%
-            <% else %>
-              <%= link_to 'x', :controller => "tournaments", action: "remove_player", :p_id => p.id %>
-            <% end %>
-          </li>
-        <% end %>
-      </ol>
-      <% end %>
-    </div>
+<br>
 
-    <div class="col-md-8" id="pairing_sidebar" style="overflow-x: hidden;">
-      <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id  %>
-        <%= render 'round' %>
-      <% elsif @tournament.current_round %>
-        <%= render 'public_round'%>
-      <% elsif @tournament.current_round == nil %>
-        <%= render 'player_list' %>
-      <% end %>
-    </div>
-  </div>
+
+<div class="col-md-4 player_list_overflow">
+  <% if current_user && !@tournament.current_round && current_user.id == @tournament.users[0].id%>
+    <%= form_for @tournament, :url => {:action => 'add_player_list'} do |f| %>
+    <%= f.text_area :name, cols: 40, rows: 10, :value => "", placeholder: "Names" %>
+    <br>
+    <em> (comma separate names) </em>
+    <br>
+    <br>
+    <%= f.submit "Add Player(s)" , {class: "btn btn-danger btn-md"} %>
+    <br>
+    <br>
+    <% end %>
+  <% end %>
+
+  <% if @tournament.current_round != nil %>
+  <h4 id="standings_style"> 
+  <ol id="player_sidebar">
+    <% @tournament.order_players.each do |p| %>
+      <li>
+        <strong><%= p.player.name %></strong>
+        <% if @tournament.current_round != nil %>
+          <br>
+          <%= p.match_points %> points | <%= p.record %> | <%= (p.opponents_match_avg * 100).round(2) %>%
+        <% else %>
+          <%= link_to 'x', :controller => "tournaments", action: "remove_player", :p_id => p.id %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+  <% end %>
+</div>
+
+<div class="col-md-8" id="pairing_sidebar" style="overflow-x: hidden;">
+  <% if current_user && @tournament.current_round && !@tournament.finals? && current_user.id == @tournament.users[0].id && !@tournament.finished %>
+    <%= render 'round' %>
+  <% elsif @tournament.current_round %>
+    <%= render 'public_round'%>
+  <% else  %>
+    <%= render 'player_list' %>
+  <% end %>
 </div>
     
-  <br>
+<br>
 
 <% if @tournament.current_round != nil %>
 <script>$(function(){
