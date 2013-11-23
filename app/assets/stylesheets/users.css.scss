@@ -1,3 +1,17 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#new_user {
+  margin: auto auto;
+}
+
+#error_explanation {
+  text-align: left;
+  margin: auto auto;
+}
+
+.field_with_errors {
+  margin: auto auto;
+  color: white;
+}
