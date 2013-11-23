@@ -8,6 +8,7 @@ class Tournament < ActiveRecord::Base
   def generate
     self.current_round ||= 0
     self.current_round += 1
+    self.save
     assess_rounds if current_round == 1
     round_matches
     self.save
@@ -25,7 +26,6 @@ class Tournament < ActiveRecord::Base
 
   def assess_rounds
     number_of_players = self.players.all.size
-
     case number_of_players
       when 0...8
         #Throw Error; Is this deprecated due to dependencies to start tournament?
