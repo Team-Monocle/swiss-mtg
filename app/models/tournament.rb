@@ -8,6 +8,7 @@ class Tournament < ActiveRecord::Base
   def generate
     self.current_round ||= 0
     self.current_round += 1
+    self.save
     assess_rounds if current_round == 1
     round_matches
     self.save
