@@ -5,15 +5,15 @@
 
   <div><%= f.label :name %><br />
   <%= f.text_field :name, :autofocus => true, required: true %></div>
-
+    <br>
   <div><%= f.label :email %><br />
   <%= f.email_field :email, :autofocus => true %></div>
-
+    <br>
   <div><%= f.label :password %><br />
   <%= f.password_field :password %></div>
-
+    <br> 
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
-<br>
+    <br>
   <div><%= f.submit "Sign up" , {class: "btn btn-danger btn-md"} %></div>
 <% end %>
