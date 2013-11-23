@@ -44,7 +44,7 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if m.game_1 == self.id
       total += 1 if m.game_2 == self.id 
       total += 1 if m.game_3 == self.id
-      total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
+      total = 2 if (total == 1 && (m.game_2 <= 0 || m.game_2 == nil) && (m.game_3 == nil || m.game_3 < 0))
       total == 2 && m.round < self.tournament.current_round
     end
     wins.length
@@ -53,10 +53,10 @@ class PlayerTournament < ActiveRecord::Base
   def match_losses
     losses = self.matches.select do |m|
       total = 0
-      total += 1 if m.game_1 && (m.game_1 != self.id) && (m.game_1 > 0 ) && (m.game_1 != 0) 
-      total += 1 if m.game_2 && (m.game_2 != self.id) && (m.game_2 > 0 ) && (m.game_2 != 0)
-      total += 1 if m.game_3 && (m.game_3 != self.id) && (m.game_3 > 0 ) && (m.game_3 != 0)
-      total = 2 if (total == 1 && (m.game_2 == 0 || m.game_2 == nil) && m.game_3 == nil)
+      total += 1 if m.game_1 && (m.game_1 != self.id) && (m.game_1 > 0)
+      total += 1 if m.game_2 && (m.game_2 != self.id) && (m.game_2 > 0)
+      total += 1 if m.game_3 && (m.game_3 != self.id) && (m.game_3 > 0)
+      total = 2 if (total == 1 && (m.game_2 <= 0 || m.game_2 == nil) && (m.game_3 == nil || m.game_3 < 0))
       total == 2 && m.round < self.tournament.current_round
     end
     losses.length
