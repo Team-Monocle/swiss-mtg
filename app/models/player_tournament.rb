@@ -45,7 +45,7 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if m.game_2 == self.id 
       total += 1 if m.game_3 == self.id
       total = 2 if (total == 1 && (m.game_2 <= 0 || m.game_2 == nil) && (m.game_3 == nil || m.game_3 < 0))
-      total == 2 && m.round < self.tournament.current_round
+      total == 2 && (m.round < self.tournament.current_round || self.tournament.current_round == self.tournament.number_of_rounds)
     end
     wins.length
   end
@@ -57,13 +57,13 @@ class PlayerTournament < ActiveRecord::Base
       total += 1 if m.game_2 && (m.game_2 != self.id) && (m.game_2 > 0)
       total += 1 if m.game_3 && (m.game_3 != self.id) && (m.game_3 > 0)
       total = 2 if (total == 1 && (m.game_2 <= 0 || m.game_2 == nil) && (m.game_3 == nil || m.game_3 < 0))
-      total == 2 && m.round < self.tournament.current_round
+      total == 2 && (m.round < self.tournament.current_round || self.tournament.current_round == self.tournament.number_of_rounds)
     end
     losses.length
   end
 
   def match_draws
-    self.finished_matches.select{|m| m.round < self.tournament.current_round }.size - match_wins - match_losses
+    self.finished_matches.select{|m| (m.round < self.tournament.current_round || self.tournament.current_round == self.tournament.number_of_rounds) }.size - match_wins - match_losses
   end
 
   def games

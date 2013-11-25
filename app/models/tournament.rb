@@ -20,6 +20,11 @@ class Tournament < ActiveRecord::Base
     round_matches
   end
 
+  def end_tournament
+    self.finished = true
+    self.save
+  end
+
   def round_started
     self.matches.where(round: current_round).where("game_1 IS NOT null").length > 0 
   end
