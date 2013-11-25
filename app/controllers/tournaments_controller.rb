@@ -114,9 +114,9 @@ class TournamentsController < ApplicationController
   end
 
   def end_prelims
+    redirect_to @tournament
     @tournament.finished = true
     @tournament.save
-    redirect_to @tournament
   end
 
   private

@@ -50,7 +50,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def round_matches
-    if current_round == 1 #i just added this
+    if current_round == 1
       player_list = self.player_tournaments.to_a.shuffle
     else
       player_list = already_bye?
