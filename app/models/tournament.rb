@@ -10,14 +10,14 @@ class Tournament < ActiveRecord::Base
     self.current_round += 1
     self.save
     assess_rounds if current_round == 1
-    round_matches
+    create_matches_helper
     self.save
   end
 
   def re_generate
     self.matches.sort_by{|m| m.id }.last.player_1.update(had_bye: false) 
     self.matches.where(round: self.current_round).destroy_all
-    round_matches
+    create_matches_helper
   end
 
   def end_tournament
@@ -54,20 +54,44 @@ class Tournament < ActiveRecord::Base
     number_of_rounds
   end
 
-  def round_matches
+  def create_matches_helper
     if current_round == 1
       player_list = self.player_tournaments.to_a.shuffle
     else
       player_list = already_bye?
     end
+
+    rep = []
     while player_list.size > 0
       if player_list.size == 1
         player_list[0].had_bye = true
         player_list[0].save
       end
-      self.matches.create(:player_1 => player_list.shift, :player_2 => player_list.shift, :round => self.current_round)
+      if !already_played?(player_list[0], player_list[1])
+        self.matches.create(:player_1 => player_list.shift, :player_2 => player_list.shift, :round => self.current_round)
+        player_list + rep
+        player_list.sort_by{|p| [-p.match_points, -p.opponents_match_avg, -p.game_win_percent, -p.opponents_game_avg] }
+        rep = []
+      else
+        rep << player_list.slice!(1)
+      end
     end
   end
+
+
+  def already_played?(player_tournament_1, player_tournament_2)
+    return false if player_tournament_2 == nil
+    x = 0
+    all_played = Match.where(tournament_id: self.id).select do |match|
+      x += 1 if match.player_1.id == player_tournament_1.id
+      x += 1 if match.player_1.id == player_tournament_2.id
+      x += 1 if (match.player_2) && (match.player_2.id == player_tournament_1.id)
+      x += 1 if (match.player_2) && (match.player_2.id == player_tournament_2.id)
+      x == 2
+    end
+    all_played.size > 0
+  end
+
 
   def already_bye?
     players = self.order_players.to_a
