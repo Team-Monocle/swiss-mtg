@@ -35,7 +35,7 @@ class PlayerTournament < ActiveRecord::Base
 
   def match_win_percent
     return 0 if self.matches_played.size == 0
-    wins = (self.had_bye && self.tournament.finished) ? match_wins - 1 : match_wins
+    wins = self.had_bye ? match_wins - 1 : match_wins
     (wins * 3 + self.match_draws) / (self.matches_played.size * 3.0)
   end
 
