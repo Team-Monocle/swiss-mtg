@@ -93,6 +93,7 @@ class Tournament < ActiveRecord::Base
         end
         matched.compact!
       end
+      binding.pry
       !valid_list ? player_list = matched.reverse! : player_list = matched
     end
     reversed ? player_list.reverse : player_list
