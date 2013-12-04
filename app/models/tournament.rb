@@ -22,6 +22,7 @@ class Tournament < ActiveRecord::Base
 
   def end_tournament
     self.finished = true
+    self.current_round += 1
     self.save
   end
 
