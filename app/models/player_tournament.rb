@@ -7,6 +7,9 @@ class PlayerTournament < ActiveRecord::Base
   has_many :finished_matches_as_1, foreign_key: "player_1_id",class_name: "Match", :conditions => ['game_1 IS NOT null AND game_1 >= 0']
   has_many :finished_matches_as_2, foreign_key: "player_2_id",class_name: "Match", :conditions => ['game_1 IS NOT null AND game_1 >= 0']
 
+  def had_bye
+    self.bye_round && self.bye_round < self.tournament.current_round
+  end
 
   def matches
     self.matches_as_1 + self.matches_as_2
@@ -18,7 +21,7 @@ class PlayerTournament < ActiveRecord::Base
 
   def match_points
     points = (match_wins * 3) + match_draws
-    had_bye ? points + 3 : points
+    self.had_bye ? points + 3 : points
   end
 
   def game_points

@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20131122153432) do
   create_table "player_tournaments", force: true do |t|
     t.integer  "player_id"
     t.integer  "tournament_id"
-    t.boolean  "had_bye"
+    t.integer  "bye_round"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 20131122153432) do
     t.date     "date"
     t.text     "details"
     t.boolean  "finished"
-    t.string   "slug"
   end
 
   create_table "user_tournaments", force: true do |t|
@@ -82,7 +81,6 @@ ActiveRecord::Schema.define(version: 20131122153432) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "slug"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

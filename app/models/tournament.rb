@@ -15,7 +15,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def re_generate
-    self.matches.sort_by{|m| m.id }.last.player_1.update(had_bye: false) 
+    self.matches.sort_by{|m| m.id }.last.player_1.update(bye_round: nil) 
     self.matches.where(round: self.current_round).destroy_all
     create_matches
   end
@@ -73,7 +73,7 @@ class Tournament < ActiveRecord::Base
 
     if bye_player
       self.matches.create(player_1_id: bye_player.id, round: self.current_round)
-      bye_player.update(had_bye: true)
+      bye_player.update(bye_round: self.current_round)
     end
   end
 
