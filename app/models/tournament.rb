@@ -57,21 +57,23 @@ class Tournament < ActiveRecord::Base
   def create_matches
     if current_round == 1
       player_list = self.player_tournaments.to_a.shuffle
-    else
+      bye_player = player_list.pop if player_list.size.odd?
+    elsif self.player_tournaments.size.odd?
       player_list = already_bye?
-    end
-
-    if player_list.size.odd? 
       bye_player = player_list.pop
+      player_list = validate_players(player_list)
+    else
+      player_list = validate_players(self.order_players)
     end
-
-    player_list = validate_players(player_list)
 
     while player_list.size > 0
       self.matches.create(:player_1 => player_list.shift, :player_2 => player_list.shift, :round => self.current_round)
     end
-    self.matches.create(player_1_id: bye_player.id, round: self.current_round)
-    bye_player.update(had_bye: true)
+
+    if bye_player
+      self.matches.create(player_1_id: bye_player.id, round: self.current_round)
+      bye_player.update(had_bye: true)
+    end
   end
 
   def validate_players(player_list)
@@ -93,7 +95,6 @@ class Tournament < ActiveRecord::Base
         end
         matched.compact!
       end
-      binding.pry
       !valid_list ? player_list = matched.reverse! : player_list = matched
     end
     reversed ? player_list.reverse : player_list
