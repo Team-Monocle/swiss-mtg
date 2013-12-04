@@ -17,11 +17,12 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def match_points
-    match_wins * 3 + match_draws
+    points = (match_wins * 3) + match_draws
+    had_bye ? points + 3 : points
   end
 
   def game_points
-    ((game_wins * 3) + game_draws)
+    ((game_wins * 3) + game_draws) 
   end
 
   def record
@@ -35,36 +36,37 @@ class PlayerTournament < ActiveRecord::Base
 
   def match_win_percent
     return 0 if self.matches_played.size == 0
-    wins = self.had_bye ? match_wins - 1 : match_wins
-    (wins * 3 + self.match_draws) / (self.matches_played.size * 3.0)
+    wins = (self.had_bye && self.tournament.finished) ? match_wins - 1 : match_wins
+    percent = (wins * 3 + self.match_draws) / (self.matches_played.size * 3.0)
+    percent > 0.33 ? percent : 0.3333
   end
 
   def match_wins
-    wins = self.matches.select do |m|
+    wins = self.matches_played.select do |m|
       total = 0
       total += 1 if m.game_1 == self.id
       total += 1 if m.game_2 == self.id 
       total += 1 if m.game_3 == self.id
       total = 2 if (total == 1 && (m.game_2 <= 0 || m.game_2 == nil) && (m.game_3 == nil || m.game_3 < 0))
-      total == 2 && (m.round < self.tournament.current_round || self.tournament.current_round == self.tournament.number_of_rounds)
+      total == 2
     end
     wins.length
   end
 
   def match_losses
-    losses = self.matches.select do |m|
+    losses = self.matches_played.select do |m|
       total = 0
       total += 1 if m.game_1 && (m.game_1 != self.id) && (m.game_1 > 0)
       total += 1 if m.game_2 && (m.game_2 != self.id) && (m.game_2 > 0)
       total += 1 if m.game_3 && (m.game_3 != self.id) && (m.game_3 > 0)
       total = 2 if (total == 1 && (m.game_2 <= 0 || m.game_2 == nil) && (m.game_3 == nil || m.game_3 < 0))
-      total == 2 && (m.round < self.tournament.current_round || self.tournament.current_round == self.tournament.number_of_rounds)
+      total == 2
     end
     losses.length
   end
 
   def match_draws
-    self.finished_matches.select{|m| (m.round < self.tournament.current_round || self.tournament.current_round == self.tournament.number_of_rounds) }.size - match_wins - match_losses
+    self.matches_played.size - match_wins - match_losses
   end
 
   def games
