@@ -26,7 +26,7 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def record
-    "#{self.match_wins} - #{self.match_losses} - #{self.match_draws}"
+    "#{self.had_bye ? self.match_wins + 1 : self.match_wins} - #{self.match_losses} - #{self.match_draws}"
   end
 
   def game_win_percent
@@ -36,7 +36,7 @@ class PlayerTournament < ActiveRecord::Base
 
   def match_win_percent
     return 0 if self.matches_played.size == 0
-    wins = (self.had_bye && self.tournament.finished) ? match_wins - 1 : match_wins
+    wins = (self.had_bye) ? match_wins - 1 : match_wins
     percent = (wins * 3 + self.match_draws) / (self.matches_played.size * 3.0)
     percent > 0.33 ? percent : 0.3333
   end
@@ -66,7 +66,7 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def match_draws
-    self.matches_played.size - match_wins - match_losses
+    self.matches_played.size - match_wins - match_losses 
   end
 
   def games
@@ -101,7 +101,10 @@ class PlayerTournament < ActiveRecord::Base
   end
 
   def matches_played
-    self.finished_matches.select{|m| m.player_2_id && m.player_2_id >= 0 }
+    self.finished_matches.select do |m|
+      m.round < self.tournament.current_round && m.player_2_id && m.player_2_id >= 0
+      # binding.pry
+    end
   end
 
   def opponents_game_avg
