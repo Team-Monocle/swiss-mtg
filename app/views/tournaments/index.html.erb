@@ -12,11 +12,11 @@
 
 
             <% @tournaments.sort_by {|tournament| -tournament.id }.each do |tournament| %>
-             <h3> <%= link_to tournament.name, tournament %> </h3>
+              <h3> <%= link_to tournament.name, tournament %> </h3>
             <% end %>
-            
-         
-          
+
+
+
     </div>
   </div>
 
