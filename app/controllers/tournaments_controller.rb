@@ -45,6 +45,7 @@ class TournamentsController < ApplicationController
       pt = @tournament.player_tournaments.find(params[:p_id])
       pt.player.destroy if pt.player.player_tournaments.size == 1
       pt.destroy
+      @tournament.select_array
       redirect_to @tournament, notice: 'Player removed'
     else
       redirect_to @tournament, notice: 'You do not have the proper permissions, you terrorist.'
@@ -102,6 +103,7 @@ class TournamentsController < ApplicationController
   def generate_round
     if @tournament.round_complete
       redirect_to @tournament, notice: "Round #{@tournament.current_round} Matches Generated"
+      @tournament.update(number_of_rounds: params[:tournament][:number_of_rounds]) if !@tournament.number_of_rounds
       @tournament.generate 
     else
       redirect_to @tournament, notice: "New round pairings cannot be generated until the current round has been completed"

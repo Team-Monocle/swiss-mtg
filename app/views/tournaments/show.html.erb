@@ -35,7 +35,16 @@
     <% elsif @tournament.current_round == @tournament.number_of_rounds && @tournament.current_round != nil && !@tournament.finished %>
       <p><%= button_to @tournament.end_message , {action: "end_prelims"}, {class: "btn btn-danger btn-md"} %></p>
     <% elsif !@tournament.finished %>
-      <%= button_to "#{@tournament.current_round ? 'Generate Next Round' : 'Confirm Playerlist and Start Tournament'}", {action: "generate_round"}, {class: "btn btn-danger btn-md"} %>
+        <% if @tournament.current_round %>
+          <%= button_to 'Generate Next Round',{action: "generate_round"}, {class: "btn btn-danger btn-md generatinator"}  %>
+        <% elsif !@tournament.current_round && @tournament.players.size >= 8 %>
+          <%= form_for @tournament, :url => {:action => 'generate_round'}, method: "post" do |f|  %>
+          <%= f.submit 'Confirm Playerlist and Start Round', {class:  "btn btn-danger btn-md generatinator"}%>
+          <br>
+          <br>
+          select rounds: <%= f.select(:number_of_rounds, options_for_select(@tournament.select_array, @tournament.select_array[-1][-1]))%>
+        <% end %>
+      <%end%>
     <% end %>
   <%end%>
 </div>

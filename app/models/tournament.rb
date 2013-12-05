@@ -9,7 +9,6 @@ class Tournament < ActiveRecord::Base
     self.current_round ||= 0
     self.current_round += 1
     self.save
-    assess_rounds if current_round == 1
     create_matches
     self.save
   end
@@ -30,27 +29,35 @@ class Tournament < ActiveRecord::Base
     self.matches.where(round: current_round).where("game_1 IS NOT null").length > 0 
   end
 
+  def select_array
+    sel_arr = []
+    assess_rounds.times do |x|
+      sel_arr << ["#{x+1}", x+1]
+    end
+    sel_arr
+  end
+
   def assess_rounds
-    number_of_players = self.players.all.size
+    number_of_players = self.players.size
     case number_of_players
       when 0...8
         #Throw Error; Is this deprecated due to dependencies to start tournament?
       when 8
-        self.number_of_rounds = 3
+         return 3
       when 9...17
-        self.number_of_rounds = 4
+         return 4
       when 17...33
-        self.number_of_rounds = 5
+         return 5
       when 33...65
-        self.number_of_rounds = 6
+         return 6
       when 65...129
-        self.number_of_rounds = 7
+         return 7
       when 129...227
-        self.number_of_rounds = 8
+         return 8
       when 227...410
-        self.number_of_rounds = 9
+        return 9
       else 
-        self.number_of_rounds = 10
+        return 10
     end
     number_of_rounds
   end
